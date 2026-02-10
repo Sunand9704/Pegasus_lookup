@@ -1,6 +1,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Check } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const plans = [
   {
@@ -81,8 +82,8 @@ const Pricing = () => {
                   </li>
                 ))}
               </ul>
-              <a
-                href="#contact"
+              <Link
+                to="/contact"
                 className={`block text-center py-3 rounded-full font-medium text-sm transition-all ${
                   plan.highlight
                     ? "bg-primary text-primary-foreground hover:opacity-90 neon-glow"
@@ -90,7 +91,7 @@ const Pricing = () => {
                 }`}
               >
                 Get Started
-              </a>
+              </Link>
             </motion.div>
           ))}
         </div>

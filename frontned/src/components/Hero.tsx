@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Play } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
@@ -59,20 +60,20 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.45, ease: "easeOut" }}
           className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4"
         >
-          <a
-            href="#contact"
+          <Link
+            to="/contact"
             className="group px-8 py-3.5 rounded-full bg-primary text-primary-foreground font-medium flex items-center gap-2 hover:opacity-90 transition-all neon-glow"
           >
             Get Started
             <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-          </a>
-          <a
-            href="#portfolio"
+          </Link>
+          <Link
+            to="/work"
             className="px-8 py-3.5 rounded-full border border-border text-foreground font-medium flex items-center gap-2 hover:border-primary/50 hover:bg-card/50 transition-all"
           >
             <Play size={16} />
             View Work
-          </a>
+          </Link>
         </motion.div>
       </div>
     </section>
