@@ -71,7 +71,7 @@ const Contact = () => {
               type="submit"
               className="w-full py-3.5 rounded-full bg-primary text-primary-foreground font-medium flex items-center justify-center gap-2 hover:opacity-90 transition-all neon-glow"
             >
-              {submitted ? "Message Sent! ✓" : (
+              {submitted ? "Message Sent!" : (
                 <>
                   Send Message
                   <Send size={16} />
