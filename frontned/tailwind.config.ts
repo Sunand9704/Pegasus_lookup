@@ -14,8 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ['"Space Grotesk"', "sans-serif"],
-        body: ['"Inter"', "sans-serif"],
+        display: ['"Amasis MT"', '"Space Grotesk"', "sans-serif"],
+        body: ['"Amasis MT"', '"Inter"', "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",

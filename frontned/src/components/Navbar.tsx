@@ -4,13 +4,22 @@ import { Menu, X } from "lucide-react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 
 const navLinks = [
-  { label: "Home", to: "/", end: true },
-  { label: "Services", to: "/services" },
-  { label: "About", to: "/about" },
-  { label: "Work", to: "/work" },
-  { label: "Pricing", to: "/pricing" },
-  { label: "Contact", to: "/contact" },
+  { label: "WHAT WE DO", to: "/services" },
+  { label: "PORTFOLIO", to: "/work" },
+  { label: "COMPANY", to: "/about" },
+  { label: "CAREERS", to: "/careers" },
+  { label: "CONTACTS", to: "/contact" },
 ];
+
+const MailIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+    <path
+      fill="currentColor"
+      fillRule="nonzero"
+      d="M3.485 5L10 11.514 16.515 5H3.485zM18 6.485l-6.55 6.55c-.801.8-2.099.8-2.9 0L2 6.484V14a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V6.485zM3 3h14a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3H3a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3z"
+    />
+  </svg>
+);
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -35,39 +44,44 @@ const Navbar = () => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`fixed left-0 right-0 top-0 z-50 transition-all duration-300 ${
-        showSolidBackground ? "border-b border-border bg-background/80 backdrop-blur-xl" : "bg-transparent"
+      className={`merc-header ${showSolidBackground ? "merc-header--solid" : "merc-header--transparent"} ${
+        mobileOpen ? "merc-header--mobile-open" : ""
       }`}
     >
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 md:h-20 md:px-8">
-        <Link to="/" className="text-xl font-display font-bold gradient-text md:text-2xl">
-          PepsLookUp
+      <div className="merc-header__inner">
+        <Link to="/" className="merc-logo" aria-label="Ferret Technologies">
+          <img
+            src={showSolidBackground ? "/assets/brand/ferret-logo-dark.svg" : "/assets/brand/ferret-logo-light.svg"}
+            alt="Ferret Technologies"
+          />
         </Link>
 
-        <div className="hidden items-center gap-8 md:flex">
+        <div className="merc-nav">
           {navLinks.map((link) => (
             <NavLink
               key={link.to}
               to={link.to}
-              end={link.end}
               className={({ isActive }) =>
-                `text-sm transition-colors duration-200 ${
-                  isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"
-                }`
+                `merc-nav__link ${isActive ? "is-active" : ""} ${showSolidBackground ? "is-solid" : "is-transparent"}`
               }
             >
               {link.label}
             </NavLink>
           ))}
-          <Link
-            to="/contact"
-            className="rounded-full bg-primary px-5 py-2 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90 neon-glow"
-          >
-            Get Started
+        </div>
+
+        <div className="merc-header__request">
+          <Link to="/contact" className="merc-button merc-button--primary">
+            <span className="merc-button__content merc-button__content--icon-text">
+              <span className="merc-button__icon">
+                <MailIcon />
+              </span>
+              <span className="merc-button__text">Request Estimate</span>
+            </span>
           </Link>
         </div>
 
-        <button onClick={() => setMobileOpen(!mobileOpen)} className="text-foreground md:hidden" aria-label="Toggle menu">
+        <button onClick={() => setMobileOpen(!mobileOpen)} className="merc-mobile-toggle" aria-label="Toggle menu">
           {mobileOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
@@ -78,28 +92,27 @@ const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="border-b border-border bg-background/95 backdrop-blur-xl md:hidden"
+            className="merc-mobile-menu"
           >
-            <div className="flex flex-col gap-4 px-4 py-6">
+            <div className="merc-mobile-menu__inner">
               {navLinks.map((link) => (
                 <NavLink
                   key={link.to}
                   to={link.to}
-                  end={link.end}
                   className={({ isActive }) =>
-                    `transition-colors ${
-                      isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"
-                    }`
+                    `merc-mobile-menu__link ${isActive ? "is-active" : ""}`
                   }
                 >
                   {link.label}
                 </NavLink>
               ))}
-              <Link
-                to="/contact"
-                className="rounded-full bg-primary px-5 py-2 text-center text-sm font-medium text-primary-foreground"
-              >
-                Get Started
+              <Link to="/contact" className="merc-button merc-button--primary merc-mobile-menu__request">
+                <span className="merc-button__content merc-button__content--icon-text">
+                  <span className="merc-button__icon">
+                    <MailIcon />
+                  </span>
+                  <span className="merc-button__text">Request Estimate</span>
+                </span>
               </Link>
             </div>
           </motion.div>
