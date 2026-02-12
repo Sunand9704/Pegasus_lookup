@@ -1,114 +1,155 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import { Mail, Phone, MapPin, Send } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 const Contact = () => {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true });
-  const [submitted, setSubmitted] = useState(false);
+    const ref = useRef(null);
+    const inView = useInView(ref, { once: true });
+    const [submitted, setSubmitted] = useState(false);
+    const [formData, setFormData] = useState({
+        name: "",
+        emailOrPhone: "",
+        message: "",
+        acceptPrivacy: false,
+    });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 3000);
-  };
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        setSubmitted(true);
+        setTimeout(() => setSubmitted(false), 3000);
+    };
 
-  return (
-    <section id="contact" className="section-padding">
-      <div className="max-w-7xl mx-auto">
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <span className="text-sm font-medium text-primary uppercase tracking-wider">Contact</span>
-          <h2 className="mt-3 text-3xl md:text-5xl font-display font-bold">
-            Let's <span className="gradient-text">Talk</span>
-          </h2>
-          <p className="mt-4 text-muted-foreground max-w-xl mx-auto">
-            Ready to start your project? Reach out and let's build something great together.
-          </p>
-        </motion.div>
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value, type } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value
+        }));
+    };
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          <motion.form
-            onSubmit={handleSubmit}
-            initial={{ opacity: 0, x: -30 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="glass-card p-8 space-y-6"
-          >
-            <div>
-              <label className="block text-sm font-medium mb-2">Name</label>
-              <input
-                type="text"
-                required
-                className="w-full px-4 py-3 rounded-xl bg-muted border border-border text-foreground text-sm focus:outline-none focus:border-primary/50 transition-colors"
-                placeholder="John Doe"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-2">Email</label>
-              <input
-                type="email"
-                required
-                className="w-full px-4 py-3 rounded-xl bg-muted border border-border text-foreground text-sm focus:outline-none focus:border-primary/50 transition-colors"
-                placeholder="john@example.com"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-2">Message</label>
-              <textarea
-                required
-                rows={5}
-                className="w-full px-4 py-3 rounded-xl bg-muted border border-border text-foreground text-sm focus:outline-none focus:border-primary/50 transition-colors resize-none"
-                placeholder="Tell us about your project..."
-              />
-            </div>
-            <button
-              type="submit"
-              className="w-full py-3.5 rounded-full bg-primary text-primary-foreground font-medium flex items-center justify-center gap-2 hover:opacity-90 transition-all neon-glow"
-            >
-              {submitted ? "Message Sent!" : (
-                <>
-                  Send Message
-                  <Send size={16} />
-                </>
-              )}
-            </button>
-          </motion.form>
+    return (
+        <section id="contact" className="relative bg-[#1a1d2e] py-20 md:py-24">
+            <div className="max-w-7xl mx-auto px-4">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+                    {/* Left side - Contact Info */}
+                    <motion.div
+                        ref={ref}
+                        initial={{ opacity: 0, x: -30 }}
+                        animate={inView ? { opacity: 1, x: 0 } : {}}
+                        transition={{ duration: 0.6 }}
+                        className="flex flex-col justify-center"
+                    >
+                        <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+                            HAVE <span className="text-[#ff0044]">QUESTIONS?</span>
+                        </h2>
+                        <p className="text-white/80 text-base mb-12">
+                            Feel free to contact us and we will respond as soon as possible.
+                        </p>
 
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex flex-col gap-6"
-          >
-            {[
-              { icon: Mail, label: "Email", value: "hello@pepslookup.com" },
-              { icon: Phone, label: "Phone", value: "+1 (555) 123-4567" },
-              { icon: MapPin, label: "Location", value: "San Francisco, CA" },
-            ].map((item) => {
-              const Icon = item.icon;
-              return (
-                <div key={item.label} className="glass-card p-6 flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
-                    <Icon size={22} className="text-primary" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">{item.label}</p>
-                    <p className="font-medium">{item.value}</p>
-                  </div>
+                        <div className="space-y-8">
+                            <div>
+                                <p className="text-[#ff0044] text-sm font-bold uppercase tracking-wider mb-2">
+                                    INFO@FERRETTECHNOLOGIES.COM
+                                </p>
+                                <a
+                                    href="mailto:info@ferrettechnologies.com"
+                                    className="text-white text-2xl md:text-3xl font-bold hover:text-[#ff0044] transition-colors"
+                                >
+                                    +1 415 770 2434
+                                </a>
+                            </div>
+                        </div>
+                    </motion.div>
+
+                    {/* Right side - Form */}
+                    <motion.form
+                        onSubmit={handleSubmit}
+                        initial={{ opacity: 0, x: 30 }}
+                        animate={inView ? { opacity: 1, x: 0 } : {}}
+                        transition={{ duration: 0.6, delay: 0.2 }}
+                        className="space-y-6"
+                    >
+                        {/* Name and Email/Phone in same row */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label className="block text-white text-sm font-medium mb-3">
+                                    Name <span className="text-[#ff0044]">*</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    name="name"
+                                    required
+                                    value={formData.name}
+                                    onChange={handleChange}
+                                    className="w-full px-4 py-3.5 rounded-md bg-[#252838] border border-[#3a3d52] text-white text-sm focus:outline-none focus:border-[#ff0044] transition-colors placeholder:text-white/30"
+                                    placeholder=""
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-white text-sm font-medium mb-3">
+                                    Email or phone <span className="text-[#ff0044]">*</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    name="emailOrPhone"
+                                    required
+                                    value={formData.emailOrPhone}
+                                    onChange={handleChange}
+                                    className="w-full px-4 py-3.5 rounded-md bg-[#252838] border border-[#3a3d52] text-white text-sm focus:outline-none focus:border-[#ff0044] transition-colors placeholder:text-white/30"
+                                    placeholder=""
+                                />
+                            </div>
+                        </div>
+
+                        {/* Message field */}
+                        <div>
+                            <label className="block text-white text-sm font-medium mb-3">
+                                A few words about your project
+                            </label>
+                            <textarea
+                                name="message"
+                                rows={5}
+                                value={formData.message}
+                                onChange={handleChange}
+                                className="w-full px-4 py-3.5 rounded-md bg-[#252838] border border-[#3a3d52] text-white text-sm focus:outline-none focus:border-[#ff0044] transition-colors resize-none placeholder:text-white/30"
+                                placeholder=""
+                            />
+                        </div>
+
+                        {/* Privacy checkbox */}
+                        <div className="flex items-start gap-3">
+                            <input
+                                type="checkbox"
+                                name="acceptPrivacy"
+                                id="privacy"
+                                required
+                                checked={formData.acceptPrivacy}
+                                onChange={handleChange}
+                                className="mt-1 w-4 h-4 rounded border-[#3a3d52] bg-[#252838] text-[#ff0044] focus:ring-[#ff0044] focus:ring-offset-0"
+                            />
+                            <label htmlFor="privacy" className="text-white/70 text-sm leading-relaxed">
+                                I accept the Privacy Policy and consent to personal data processing.
+                            </label>
+                        </div>
+
+                        {/* Submit button */}
+                        <button
+                            type="submit"
+                            disabled={!formData.acceptPrivacy}
+                            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-[#ff0044] text-white font-medium text-sm hover:bg-[#e6003d] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                            {submitted ? "Message Sent!" : (
+                                <>
+                                    Next
+                                    <ArrowRight size={18} />
+                                </>
+                            )}
+                        </button>
+                    </motion.form>
                 </div>
-              );
-            })}
-          </motion.div>
-        </div>
-      </div>
-    </section>
-  );
+            </div>
+        </section>
+    );
 };
 
 export default Contact;

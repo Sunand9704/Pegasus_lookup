@@ -1,80 +1,145 @@
-import { motion } from "framer-motion";
-import { ArrowRight, Play } from "lucide-react";
+import { Suspense, useRef } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { Float, Stars } from "@react-three/drei";
+import * as THREE from "three";
 import { Link } from "react-router-dom";
+
+const awards = [
+  {
+    icon: "/assets/merc-hero/i-48-apple.svg",
+    title: "2 APPS IN APP STORE'S",
+    subtitle: "TRENDS OF THE YEAR",
+  },
+  {
+    icon: "/assets/merc-hero/i-48-clutch.svg",
+    title: "GLOBAL LEADERS, TOP B2B",
+    subtitle: "COMPANIES, TOP DEVELOPERS",
+  },
+  {
+    icon: "/assets/merc-hero/i-48-css-new.svg",
+    title: "UX, UI, INNOVATION,",
+    subtitle: "SPECIAL KUDOS CSS AWARDS",
+  },
+  {
+    icon: "/assets/merc-hero/i-48-top.svg",
+    title: "TOP ANDROID APP",
+    subtitle: "DEVELOPMENT COMPANY",
+  },
+];
+
+const RotatingNode = ({
+  position,
+  color,
+  size = 1,
+  speed = 1,
+}: {
+  position: [number, number, number];
+  color: string;
+  size?: number;
+  speed?: number;
+}) => {
+  const meshRef = useRef<THREE.Mesh>(null);
+
+  useFrame((state) => {
+    if (meshRef.current) {
+      meshRef.current.rotation.x = state.clock.elapsedTime * 0.3 * speed;
+      meshRef.current.rotation.y = state.clock.elapsedTime * 0.4 * speed;
+    }
+  });
+
+  return (
+    <Float speed={1.6 * speed} rotationIntensity={0.4} floatIntensity={0.9}>
+      <mesh ref={meshRef} position={position}>
+        <boxGeometry args={[size, size, size]} />
+        <meshStandardMaterial
+          color={color}
+          metalness={0.9}
+          roughness={0.15}
+          emissive={color}
+          emissiveIntensity={0.4}
+        />
+      </mesh>
+    </Float>
+  );
+};
+
+const TechScene = () => {
+  return (
+    <>
+      <ambientLight intensity={0.25} />
+      <pointLight position={[10, 10, 10]} intensity={1.2} color="#ff0044" />
+      <pointLight position={[-8, -6, -6]} intensity={0.8} color="#4f68ff" />
+
+      <Stars
+        radius={120}
+        depth={50}
+        count={2500}
+        factor={4}
+        saturation={0}
+        fade
+        speed={1}
+      />
+
+      {/* Floating tech nodes */}
+      <RotatingNode position={[-3, 1, -4]} color="#ff0044" size={1.4} speed={1} />
+      <RotatingNode position={[2.5, -0.5, -3]} color="#4f68ff" size={1.1} speed={0.8} />
+      <RotatingNode position={[0, 2.2, -5]} color="#06b6d4" size={0.9} speed={1.3} />
+      <RotatingNode position={[-1.2, -2.0, -4.5]} color="#f97316" size={0.8} speed={1.1} />
+
+      {/* Subtle grid plane */}
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -3.2, -2]}>
+        <planeGeometry args={[40, 40, 40, 40]} />
+        <meshBasicMaterial
+          color="#1a1a2e"
+          wireframe
+          opacity={0.35}
+          transparent
+        />
+      </mesh>
+    </>
+  );
+};
 
 const Hero = () => {
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background gradient orbs */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full bg-primary/20 blur-[120px] animate-pulse-glow" />
-        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full bg-accent/15 blur-[100px] animate-pulse-glow" style={{ animationDelay: "1.5s" }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-neon-cyan/5 blur-[150px]" />
+    <section id="home" className="merc-hero">
+      <div className="merc-hero__planet" aria-hidden="true">
+        <div className="merc-hero__planet-canvas">
+          <Canvas camera={{ position: [0, 0, 9], fov: 45 }}>
+            <Suspense fallback={null}>
+              <TechScene />
+            </Suspense>
+          </Canvas>
+        </div>
       </div>
 
-      {/* Grid pattern */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:60px_60px]" />
+      <div className="merc-hero__content">
+        <div className="merc-hero__intro">
+          <h1 className="merc-hero__title">
+            <span>BUILDING TOMORROW'S SOLUTIONS.</span>
+            <span className="merc-hero__title-accent">GLOBALLY.</span>
+          </h1>
 
-      {/* Floating elements */}
-      <div className="absolute top-32 right-[15%] w-20 h-20 rounded-2xl border border-primary/20 bg-primary/5 backdrop-blur-sm animate-float" />
-      <div className="absolute bottom-32 left-[10%] w-16 h-16 rounded-full border border-accent/20 bg-accent/5 backdrop-blur-sm animate-float-slow" />
-      <div className="absolute top-1/2 right-[8%] w-12 h-12 rounded-lg border border-neon-cyan/20 bg-neon-cyan/5 backdrop-blur-sm animate-float" style={{ animationDelay: "2s" }} />
+          <p className="merc-hero__proof">Trusted expertise with numerous mobile and wearable applications featured globally.</p>
 
-      <div className="relative z-10 max-w-5xl mx-auto px-4 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-        >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-card/50 backdrop-blur-sm text-sm text-muted-foreground mb-8">
-            <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-            Available for new projects
-          </div>
-        </motion.div>
-
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.15, ease: "easeOut" }}
-          className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-display font-bold leading-[1.05] tracking-tight"
-        >
-          We Build{" "}
-          <span className="gradient-text">Scalable</span>
-          <br />
-          Digital Products
-        </motion.h1>
-
-        <motion.p
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-          className="mt-6 md:mt-8 text-base md:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed"
-        >
-          We are a premium software development agency specializing in building
-          high-performance web & mobile applications for startups and enterprises.
-        </motion.p>
-
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.45, ease: "easeOut" }}
-          className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4"
-        >
-          <Link
-            to="/contact"
-            className="group px-8 py-3.5 rounded-full bg-primary text-primary-foreground font-medium flex items-center gap-2 hover:opacity-90 transition-all neon-glow"
-          >
-            Get Started
-            <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+          <Link to="/contact" className="merc-button merc-button--primary merc-hero__cta">
+            <span className="merc-button__content">
+              <span className="merc-button__text">Request Estimate</span>
+            </span>
           </Link>
-          <Link
-            to="/work"
-            className="px-8 py-3.5 rounded-full border border-border text-foreground font-medium flex items-center gap-2 hover:border-primary/50 hover:bg-card/50 transition-all"
-          >
-            <Play size={16} />
-            View Work
-          </Link>
-        </motion.div>
+        </div>
+
+        <ul className="merc-achievements">
+          {awards.map((award) => (
+            <li key={award.title} className="merc-achievements__item">
+              <div className="merc-achievements__icon-wrap">
+                <img src={award.icon} alt="" width={48} height={48} />
+              </div>
+              <p className="merc-achievements__text">{award.title}</p>
+              <p className="merc-achievements__text">{award.subtitle}</p>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );
