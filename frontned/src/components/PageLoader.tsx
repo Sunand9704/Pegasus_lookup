@@ -79,19 +79,6 @@ const LoadingAnimation = ({ onComplete }: { onComplete: () => void }) => {
                 <div className="w-64 h-64 rounded-full border-2 border-[#4f68ff]" />
             </motion.div>
 
-            {/* Loading text */}
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: [0, 1, 1, 0], y: [20, 0, 0, -10] }}
-                transition={{
-                    duration: 1.8,
-                    times: [0, 0.3, 0.8, 1],
-                    ease: "easeInOut"
-                }}
-                className="absolute bottom-1/3 text-white/70 text-sm font-medium tracking-wider"
-            >
-                LOADING...
-            </motion.div>
         </motion.div>
     );
 };

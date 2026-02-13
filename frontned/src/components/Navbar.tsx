@@ -4,7 +4,7 @@ import { Menu, X } from "lucide-react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 
 const navLinks = [
-  { label: "WHAT WE DO", to: "/services" },
+  { label: "WHAT WE DO", to: "/what-we-do" },
   { label: "PORTFOLIO", to: "/work" },
   { label: "COMPANY", to: "/about" },
   { label: "CAREERS", to: "/careers" },
@@ -26,6 +26,7 @@ const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
   const isHomeRoute = location.pathname === "/";
+  const isTransparentRoute = ["/", "/what-we-do"].includes(location.pathname);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -37,32 +38,36 @@ const Navbar = () => {
     setMobileOpen(false);
   }, [location.pathname]);
 
-  const showSolidBackground = scrolled || !isHomeRoute;
+  const showSolidBackground = scrolled || !isTransparentRoute;
 
   return (
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`merc-header ${showSolidBackground ? "merc-header--solid" : "merc-header--transparent"} ${
-        mobileOpen ? "merc-header--mobile-open" : ""
-      }`}
+      className={`header ${showSolidBackground ? "header--solid" : "header--transparent"} ${isHomeRoute && scrolled ? "header--light" : ""
+        } ${mobileOpen ? "header--mobile-open" : ""}`}
     >
-      <div className="merc-header__inner">
-        <Link to="/" className="merc-logo" aria-label="Ferret Technologies">
+      <div className="header__inner">
+        <Link to="/" className="logo" aria-label="Ferret Technologies">
           <img
-            src={showSolidBackground ? "/assets/brand/ferret-logo-dark.svg" : "/assets/brand/ferret-logo-light.svg"}
+            src={isHomeRoute && scrolled ? "/assets/brand/ferret-symbol.svg" : "/assets/brand/ferret-symbol-white.svg"}
             alt="Ferret Technologies"
+            className="logo__img"
           />
+          <div className="logo__text">
+            <span className={`logo__name ${showSolidBackground ? "is-solid" : "is-transparent"} ${isHomeRoute && scrolled ? "is-home-scrolled" : ""}`}>FERRET</span>
+            <span className="logo__slogan">TECHNOLOGIES</span>
+          </div>
         </Link>
 
-        <div className="merc-nav">
+        <div className="nav">
           {navLinks.map((link) => (
             <NavLink
               key={link.to}
               to={link.to}
               className={({ isActive }) =>
-                `merc-nav__link ${isActive ? "is-active" : ""} ${showSolidBackground ? "is-solid" : "is-transparent"}`
+                `nav__link ${isActive ? "is-active" : ""} ${showSolidBackground ? "is-solid" : "is-transparent"}`
               }
             >
               {link.label}
@@ -70,18 +75,18 @@ const Navbar = () => {
           ))}
         </div>
 
-        <div className="merc-header__request">
-          <Link to="/contact" className="merc-button merc-button--primary">
-            <span className="merc-button__content merc-button__content--icon-text">
-              <span className="merc-button__icon">
+        <div className="header__request">
+          <Link to="/contact" className="button button--primary">
+            <span className="button__content button__content--icon-text">
+              <span className="button__icon">
                 <MailIcon />
               </span>
-              <span className="merc-button__text">Request Estimate</span>
+              <span className="button__text">Request Estimate</span>
             </span>
           </Link>
         </div>
 
-        <button onClick={() => setMobileOpen(!mobileOpen)} className="merc-mobile-toggle" aria-label="Toggle menu">
+        <button onClick={() => setMobileOpen(!mobileOpen)} className="mobile-toggle" aria-label="Toggle menu">
           {mobileOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
@@ -92,26 +97,26 @@ const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="merc-mobile-menu"
+            className="mobile-menu"
           >
-            <div className="merc-mobile-menu__inner">
+            <div className="mobile-menu__inner">
               {navLinks.map((link) => (
                 <NavLink
                   key={link.to}
                   to={link.to}
                   className={({ isActive }) =>
-                    `merc-mobile-menu__link ${isActive ? "is-active" : ""}`
+                    `mobile-menu__link ${isActive ? "is-active" : ""}`
                   }
                 >
                   {link.label}
                 </NavLink>
               ))}
-              <Link to="/contact" className="merc-button merc-button--primary merc-mobile-menu__request">
-                <span className="merc-button__content merc-button__content--icon-text">
-                  <span className="merc-button__icon">
+              <Link to="/contact" className="button button--primary mobile-menu__request">
+                <span className="button__content button__content--icon-text">
+                  <span className="button__icon">
                     <MailIcon />
                   </span>
-                  <span className="merc-button__text">Request Estimate</span>
+                  <span className="button__text">Request Estimate</span>
                 </span>
               </Link>
             </div>

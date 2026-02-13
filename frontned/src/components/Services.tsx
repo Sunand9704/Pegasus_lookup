@@ -1,5 +1,6 @@
 import { AnimatePresence, motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import type { LucideIcon } from "lucide-react";
 import { ArrowRight, ChevronLeft, ChevronRight, Cpu, Globe, Monitor, Smartphone, UsersRound } from "lucide-react";
 
@@ -8,6 +9,7 @@ interface ServiceItem {
   title: string[];
   gradient: string;
   glow: string;
+  slug: string;
 }
 
 interface TechnologySlide {
@@ -22,30 +24,35 @@ const services: ServiceItem[] = [
   {
     icon: Smartphone,
     title: ["Mobile", "Development"],
+    slug: "mobile-development",
     gradient: "linear-gradient(150deg, #5A75FF 0%, #4457E9 100%)",
     glow: "0 14px 45px rgba(74, 101, 255, 0.35)",
   },
   {
     icon: Globe,
     title: ["Web", "Development"],
+    slug: "web-development",
     gradient: "linear-gradient(150deg, #FF6C5A 0%, #FF4F63 100%)",
     glow: "0 14px 45px rgba(255, 91, 94, 0.35)",
   },
   {
     icon: Monitor,
     title: ["Desktop", "Development"],
+    slug: "desktop-development",
     gradient: "linear-gradient(150deg, #A13BFF 0%, #6C3BDB 100%)",
     glow: "0 14px 45px rgba(146, 60, 245, 0.35)",
   },
   {
     icon: UsersRound,
     title: ["Staff", "Augmentation"],
+    slug: "staff-augmentation",
     gradient: "linear-gradient(150deg, #FFB56A 0%, #EF8E48 100%)",
     glow: "0 14px 45px rgba(247, 165, 87, 0.35)",
   },
   {
     icon: Cpu,
     title: ["IoT/Emerging", "Tech"],
+    slug: "iot-emerging-tech",
     gradient: "linear-gradient(150deg, #7FD34C 0%, #3EBA46 100%)",
     glow: "0 14px 45px rgba(94, 198, 77, 0.35)",
   },
@@ -57,7 +64,7 @@ const technologySlides: TechnologySlide[] = [
     title: "Wearable Health Platforms",
     description:
       "We build companion experiences for fitness bands and smart watches, including low-latency sync, activity analytics, and battery-aware background updates for daily engagement.",
-    image: "/assets/tech-showcase/wearable-grid.svg",
+    image: "https://images.unsplash.com/photo-1544117518-e796323146b0?q=80&w=800&auto=format&fit=crop",
     panelGradient: "linear-gradient(125deg, #7BE3E0 0%, #45C0CC 100%)",
   },
   {
@@ -65,7 +72,7 @@ const technologySlides: TechnologySlide[] = [
     title: "Cloud Orchestration Systems",
     description:
       "Our teams design cloud-native service layers with observable APIs, resilient queue workflows, and automation-first delivery pipelines that keep releases stable at scale.",
-    image: "/assets/tech-showcase/cloud-orchestrator.svg",
+    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800&auto=format&fit=crop",
     panelGradient: "linear-gradient(125deg, #8691FF 0%, #4F63E6 100%)",
   },
   {
@@ -73,7 +80,7 @@ const technologySlides: TechnologySlide[] = [
     title: "AI Copilot Experiences",
     description:
       "From support assistants to internal productivity copilots, we ship secure AI features with prompt controls, grounded responses, and measurable business outcomes.",
-    image: "/assets/tech-showcase/ai-copilot.svg",
+    image: "https://images.unsplash.com/photo-1507146426996-ef05306b995a?q=80&w=800&auto=format&fit=crop",
     panelGradient: "linear-gradient(125deg, #B054FF 0%, #733CDB 100%)",
   },
   {
@@ -81,7 +88,7 @@ const technologySlides: TechnologySlide[] = [
     title: "Data Fabric Engineering",
     description:
       "We connect fragmented data sources into governed pipelines with event processing, live dashboards, and fault-tolerant flows that support product and operations teams.",
-    image: "/assets/tech-showcase/data-fabric.svg",
+    image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc51?q=80&w=800&auto=format&fit=crop",
     panelGradient: "linear-gradient(125deg, #4ADACA 0%, #24B4A7 100%)",
   },
   {
@@ -89,13 +96,14 @@ const technologySlides: TechnologySlide[] = [
     title: "Commerce Service Suites",
     description:
       "We develop modular commerce platforms covering catalog APIs, checkout services, and admin tooling so teams can roll out new channels without replatforming.",
-    image: "/assets/tech-showcase/commerce-suite.svg",
+    image: "https://images.unsplash.com/photo-1557821552-17105176677c?q=80&w=800&auto=format&fit=crop",
     panelGradient: "linear-gradient(125deg, #8DDD53 0%, #4DB846 100%)",
   },
 ];
 
 const ServiceCircle = ({ service, index }: { service: ServiceItem; index: number }) => {
   const ref = useRef(null);
+  const navigate = useNavigate();
   const inView = useInView(ref, { once: true, margin: "-30px" });
   const Icon = service.icon;
 
@@ -105,17 +113,64 @@ const ServiceCircle = ({ service, index }: { service: ServiceItem; index: number
       initial={{ opacity: 0, y: 32 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay: index * 0.08 }}
-      className="flex flex-col items-center text-center"
+      className="flex flex-col items-center text-center group cursor-pointer"
+      onClick={() => navigate(`/services/${service.slug}`)}
     >
-      <div
-        className="relative flex h-[160px] w-[160px] items-center justify-center rounded-full md:h-[176px] md:w-[176px]"
-        style={{ background: service.gradient, boxShadow: service.glow }}
-      >
-        <div className="absolute inset-[13%] rounded-full border border-white/20" />
-        <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.24)_0%,rgba(255,255,255,0)_40%)]" />
-        <Icon size={56} className="relative z-[1] text-white" strokeWidth={1.8} />
+      <div className="relative">
+        {/* Deep Grounding Shadow */}
+        <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-32 h-8 bg-black/50 blur-2xl rounded-[50%] opacity-0 group-hover:opacity-100 transition-opacity duration-500 scale-150" />
+
+        <motion.div
+          whileHover={{
+            scale: 1.1,
+            boxShadow: "0 25px 50px rgba(255, 255, 255, 0.15)",
+          }}
+          className="relative flex h-[160px] w-[160px] items-center justify-center rounded-full md:h-[176px] md:w-[176px] transition-all duration-500 overflow-visible"
+          style={{ background: service.gradient }}
+        >
+          {/* Animated Background Pulse */}
+          <div className="absolute inset-0 rounded-full border-4 border-white/0 group-hover:border-white/20 group-hover:scale-110 transition-all duration-700 pointer-events-none" />
+
+          <div className="absolute inset-[13%] rounded-full border border-white/20 group-hover:border-white/40 transition-colors" />
+
+          {/* Hover Glow Overlay */}
+          <div className="absolute inset-0 rounded-full bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
+
+          <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.2)_0%,rgba(255,255,255,0)_40%)]" />
+        </motion.div>
+
+        {/* Dramatic Pop-Out Icon (No distortion) */}
+        <motion.div
+          className="absolute inset-0 flex items-center justify-center pointer-events-none"
+          initial={false}
+          whileHover={{
+            y: -100,
+            scale: 2.2,
+            filter: "drop-shadow(0 25px 15px rgba(0,0,0,0.6))",
+          }}
+          transition={{
+            type: "spring",
+            stiffness: 300,
+            damping: 18
+          }}
+        >
+          <motion.div
+            animate={{
+              y: [0, -5, 0],
+            }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: index * 0.5
+            }}
+          >
+            <Icon size={84} className="relative z-[1] text-white" strokeWidth={1.5} />
+          </motion.div>
+        </motion.div>
       </div>
-      <h3 className="mt-7 text-[19px] font-display font-bold leading-[1.1] text-white md:text-[21px]">
+
+      <h3 className="mt-8 text-[19px] font-display font-bold leading-[1.1] text-white md:text-[21px] transition-transform duration-300 group-hover:translate-y-1">
         {service.title[0]}
         <br />
         {service.title[1]}
@@ -168,7 +223,7 @@ const TechnologyShowcase = () => {
                 <img
                   src={activeSlide.image}
                   alt={activeSlide.title}
-                  className="h-auto w-full max-w-[610px] rounded-[20px] border border-white/15 bg-[#121827]/25 shadow-[0_14px_42px_rgba(0,0,0,0.35)]"
+                  className="aspect-[16/10] h-auto w-full max-w-[610px] rounded-[20px] border border-white/15 bg-[#121827]/25 object-cover shadow-[0_14px_42px_rgba(0,0,0,0.35)]"
                 />
               </div>
 
