@@ -1,9 +1,35 @@
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Smartphone, Globe, Monitor, UsersRound, Cpu, ArrowLeft } from "lucide-react";
+import { Smartphone, Globe, Monitor, UsersRound, Cpu, ArrowLeft, Watch, Palette, Zap, Search, ShieldCheck, Accessibility, Terminal } from "lucide-react";
 import Navbar from "@/components/Navbar";
 
 const serviceData = {
+    "cutting-edge": {
+        title: "Cutting Edge",
+        icon: Zap,
+        color: "#65d75e",
+        description: "We combine new platforms, modern architecture, and practical experimentation to deliver products that feel ahead of the market, not behind it.",
+        features: [
+            "Rapid technology evaluation",
+            "Modern architecture blueprints",
+            "Prototype-to-production acceleration",
+            "Performance-focused implementation",
+            "Innovation roadmap planning"
+        ]
+    },
+    "digital-transformation": {
+        title: "Digital Transformation",
+        icon: Cpu,
+        color: "#7d59f0",
+        description: "Transform legacy workflows into scalable digital systems with improved speed, visibility, and operational control across your organization.",
+        features: [
+            "Legacy platform modernization",
+            "Process automation strategy",
+            "Cloud migration planning",
+            "Data platform integration",
+            "Change enablement support"
+        ]
+    },
     "mobile-development": {
         title: "Mobile Development",
         icon: Smartphone,
@@ -30,10 +56,88 @@ const serviceData = {
             "API Integration & Development"
         ]
     },
+    "design": {
+        title: "Design",
+        icon: Palette,
+        color: "#f0a327",
+        description: "Create intuitive, memorable digital experiences through product design systems that align business goals with user behavior.",
+        features: [
+            "Product UX strategy",
+            "UI systems and components",
+            "Interactive prototyping",
+            "Usability testing workflows",
+            "Design-to-dev handoff process"
+        ]
+    },
+    "ai-features": {
+        title: "AI Features Integration",
+        icon: Cpu,
+        color: "#f84273",
+        description: "Integrate practical AI features into your product to improve automation, personalization, and decision support with measurable value.",
+        features: [
+            "LLM-assisted feature design",
+            "Model API orchestration",
+            "Prompt and workflow engineering",
+            "Safety and guardrail patterns",
+            "Monitoring and iteration loops"
+        ]
+    },
+    "ai-assisted": {
+        title: "AI Assisted Development",
+        icon: Terminal,
+        color: "#f84273",
+        description: "Use AI-accelerated delivery practices to reduce build cycles while preserving quality, test coverage, and long-term maintainability.",
+        features: [
+            "AI-augmented engineering workflows",
+            "Code generation quality gates",
+            "Test scaffolding acceleration",
+            "Developer productivity automation",
+            "Team enablement and standards"
+        ]
+    },
+    "accessible": {
+        title: "Accessible & Compliant",
+        icon: Accessibility,
+        color: "#f33f6b",
+        description: "Build inclusive products that meet accessibility and compliance expectations from the start, reducing risk and improving reach.",
+        features: [
+            "WCAG-focused implementation",
+            "Accessibility audits and fixes",
+            "Compliance-ready UI patterns",
+            "Assistive technology validation",
+            "Documentation and governance"
+        ]
+    },
+    "discovery": {
+        title: "Discovery",
+        icon: Search,
+        color: "#23acee",
+        description: "Validate product direction early through structured discovery, helping teams prioritize the right scope before full-scale development.",
+        features: [
+            "Stakeholder alignment workshops",
+            "Technical and product audits",
+            "Requirement refinement",
+            "Risk and feasibility analysis",
+            "Execution-ready delivery plan"
+        ]
+    },
+    "quality-assurance": {
+        title: "Quality Assurance",
+        icon: ShieldCheck,
+        color: "#9f58f3",
+        description: "Ship confidently with a QA process designed for speed and reliability across functional, integration, and release-level testing.",
+        features: [
+            "Manual and automated QA strategy",
+            "Regression test planning",
+            "API and integration testing",
+            "Release readiness validation",
+            "Defect triage and reporting"
+        ]
+    },
     "desktop-development": {
         title: "Desktop Development",
         icon: Monitor,
-        color: "#A13BFF",
+        color: "#64d65a",
         description: "Robust and high-performance desktop applications for Windows, macOS, and Linux. We build powerful tools that take full advantage of desktop hardware.",
         features: [
             "Cross-platform Desktop Apps",
@@ -41,6 +145,19 @@ const serviceData = {
             "System Integration",
             "Offline Functionality",
             "Custom Enterprise Tools"
+        ]
+    },
+    "wearables": {
+        title: "Wearable Devices",
+        icon: Watch,
+        color: "#f74671",
+        description: "Build connected wearable experiences that blend hardware data, real-time interaction, and performance-efficient mobile integration.",
+        features: [
+            "Wear OS and watchOS app support",
+            "Sensor and health data pipelines",
+            "BLE device communication",
+            "Battery-conscious app architecture",
+            "Companion app integration"
         ]
     },
     "staff-augmentation": {
@@ -93,9 +210,9 @@ const ServiceDetails = () => {
             <Navbar />
 
             <main className="pt-32 pb-20 px-4 md:px-8 max-w-7xl mx-auto">
-                <Link to="/" className="inline-flex items-center gap-2 text-white/60 hover:text-[#ff0044] transition-colors mb-12">
+                <Link to="/what-we-do" className="inline-flex items-center gap-2 text-white/60 hover:text-[#ff0044] transition-colors mb-12">
                     <ArrowLeft size={20} />
-                    <span>Back to Services</span>
+                    <span>Back to What We Do</span>
                 </Link>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
