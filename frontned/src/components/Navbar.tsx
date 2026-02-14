@@ -56,8 +56,11 @@ const Navbar = () => {
             className="logo__img"
           />
           <div className="logo__text">
-            <span className={`logo__name ${showSolidBackground ? "is-solid" : "is-transparent"} ${isHomeRoute && scrolled ? "is-home-scrolled" : ""}`}>FERRET</span>
-            <span className="logo__slogan">TECHNOLOGIES</span>
+            <img
+              src="/assets/text logo/Text logo.png"
+              alt="Ferret Technologies"
+              className={`h-11 w-auto object-contain transition-all duration-300 ${isHomeRoute && scrolled ? "filter-none" : "brightness-200 contrast-200"}`}
+            />
           </div>
         </Link>
 

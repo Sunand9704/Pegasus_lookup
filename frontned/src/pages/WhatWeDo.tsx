@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import {
     Smartphone,
     Cpu,
@@ -27,33 +28,404 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import TwinklingStars from "@/components/TwinklingStars";
 
-const serviceBubbles = [
-    // Center bubble - Mobile Development (fully visible, largest)
-    { id: "mobile", label: "Mobile Development", icon: Smartphone, size: "xl", color: "#3b62f6", x: 0, y: 0, delay: 0, morph: "35% 65% 65% 35% / 45% 45% 55% 55%", illustration: "phone" },
+type ContentPlace = "top-left" | "top-right" | "bottom-left" | "bottom-right" | "center";
 
-    // Above Mobile - AI Features Integration (overlapped by Mobile, no icon, oval shape)
-    { id: "ai-features", label: "AI Features Integration", icon: Cpu, size: "oval", color: "#f43f5e", x: 0, y: -220, delay: 0.3, morph: "50% 50% 50% 50% / 50% 50% 50% 50%" },
+interface ServiceBubble {
+    id: string;
+    label: string;
+    slug: string;
+    color: string;
+    type: "center" | "corner" | "small-top" | "small-bottom" | "peripheral";
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+    contentPlace: ContentPlace;
+    illustration?: "phone" | "watch" | "tablet" | "laptop" | "hand";
+    labelSize?: "center" | "corner" | "small";
+    shape?: string;
+    hoverShape?: string;
+    gradient?: string;
+    titleFirst?: boolean;
+}
 
-    // Top-left corner - Cutting Edge (overlapped by Mobile and AI Features, has icon)
-    { id: "cutting-edge", label: "Cutting Edge", icon: Zap, size: "large", color: "#4ade80", x: -200, y: -140, delay: 0.1, morph: "40% 60% 40% 60% / 60% 40% 60% 40%", illustration: "watch" },
-
-    // Top-right corner - Digital Transformation (overlapped by Mobile and AI Features, has icon)
-    { id: "digital", label: "Digital Transformation", icon: Monitor, size: "large", color: "#8b5cf6", x: 200, y: -140, delay: 0.2, morph: "30% 70% 50% 50% / 50% 50% 70% 30%", illustration: "tablet" },
-
-    // Bottom-left corner - Web Development (overlapped by Mobile, has icon)
-    { id: "web", label: "Web Development", icon: Globe, size: "large", color: "#f43f5e", x: -200, y: 240, delay: 0.7, morph: "35% 65% 65% 35% / 65% 35% 35% 65%", illustration: "laptop" },
-
-    // Bottom-right corner - Design (overlapped by Mobile, has icon)
-    { id: "design", label: "Design", icon: Palette, size: "largePlus", color: "#f59e0b", x: 200, y: 240, delay: 0.9, morph: "45% 55% 35% 65% / 65% 35% 65% 35%", illustration: "hand" },
-
-    // Smaller bubbles without icons - positioned around
-    { id: "accessible", label: "Accessible & Compliant", icon: Accessibility, size: "smallPlus", color: "#e11d48", x: -420, y: -80, delay: 0.4, morph: "70% 30% 60% 40% / 40% 60% 30% 70%" },
-    { id: "discovery", label: "Discovery", icon: Search, size: "small", color: "#0ea5e9", x: -380, y: 60, delay: 0.5, morph: "40% 60% 70% 30% / 40% 40% 60% 60%" },
-    { id: "qa", label: "Quality Assurance", icon: ShieldCheck, size: "smallPlus", color: "#a855f7", x: -400, y: 180, delay: 0.6, morph: "50% 50% 30% 70% / 70% 30% 70% 30%" },
-    { id: "ai-assisted", label: "AI Assisted Development", icon: Terminal, size: "medium", color: "#f43f5e", x: 0, y: 320, delay: 0.8, morph: "60% 40% 60% 40% / 40% 60% 40% 60%" },
-    { id: "wearables", label: "Wearable Devices", icon: Watch, size: "smallPlus", color: "#f43f5e", x: 420, y: 120, delay: 1.0, morph: "40% 60% 60% 40% / 60% 40% 40% 60%" },
-    { id: "desktop", label: "Desktop Development", icon: Monitor, size: "smallPlus", color: "#4ade80", x: 440, y: -20, delay: 1.1, morph: "70% 30% 40% 60% / 60% 40% 70% 30%" },
+const serviceBubbles: ServiceBubble[] = [
+    { id: "mobile", label: "Mobile Development", slug: "mobile-development", color: "#3b62f6", type: "center", x: 0, y: 16, width: 404, height: 404, contentPlace: "center", illustration: "phone", labelSize: "center", shape: "46% 54% 49% 51% / 56% 50% 50% 44%", hoverShape: "50% 50% 46% 54% / 53% 47% 53% 47%", gradient: "linear-gradient(165deg,#6b82ff 0%,#4d67f8 48%,#3758df 100%)", titleFirst: true },
+    { id: "cutting-edge", label: "Cutting Edge", slug: "cutting-edge", color: "#4ade80", type: "corner", x: -214, y: -140, width: 374, height: 374, contentPlace: "top-left", illustration: "watch", labelSize: "corner", shape: "56% 44% 51% 49% / 48% 57% 43% 52%", hoverShape: "52% 48% 55% 45% / 51% 53% 47% 49%", gradient: "linear-gradient(165deg,#9be95f 0%,#62d663 56%,#47c35d 100%)", titleFirst: true },
+    { id: "digital", label: "Digital Transformation", slug: "digital-transformation", color: "#8b5cf6", type: "corner", x: 218, y: -138, width: 360, height: 360, contentPlace: "top-right", illustration: "tablet", labelSize: "corner", shape: "47% 53% 55% 45% / 52% 46% 54% 48%", hoverShape: "52% 48% 50% 50% / 55% 44% 56% 45%", gradient: "linear-gradient(165deg,#8f67f7 0%,#764fe7 55%,#653fda 100%)", titleFirst: true },
+    { id: "web", label: "Web Development", slug: "web-development", color: "#f43f5e", type: "corner", x: -220, y: 186, width: 388, height: 388, contentPlace: "bottom-left", illustration: "laptop", labelSize: "corner", shape: "58% 42% 47% 53% / 53% 51% 49% 47%", hoverShape: "54% 46% 51% 49% / 56% 47% 53% 44%", gradient: "linear-gradient(165deg,#ff6f75 0%,#ff4f65 54%,#f13f5d 100%)" },
+    { id: "design", label: "Design", slug: "design", color: "#f59e0b", type: "corner", x: 220, y: 188, width: 388, height: 388, contentPlace: "bottom-right", illustration: "hand", labelSize: "corner", shape: "45% 55% 53% 47% / 50% 58% 42% 50%", hoverShape: "49% 51% 55% 45% / 54% 52% 48% 46%", gradient: "linear-gradient(165deg,#ffc56a 0%,#f7ac33 54%,#ee9808 100%)" },
+    { id: "ai-features", label: "AI Features Integration", slug: "ai-features", color: "#f43f5e", type: "small-top", x: 0, y: -238, width: 298, height: 162, contentPlace: "center", labelSize: "small", shape: "61% 39% 52% 48% / 56% 60% 40% 44%", hoverShape: "57% 43% 49% 51% / 53% 57% 43% 47%", gradient: "linear-gradient(165deg,#ff4d75 0%,#ff3f63 56%,#ef3358 100%)" },
+    { id: "ai-assisted", label: "AI Assisted Development", slug: "ai-assisted", color: "#f43f5e", type: "small-bottom", x: 0, y: 270, width: 318, height: 152, contentPlace: "center", labelSize: "small", shape: "55% 45% 50% 50% / 61% 59% 41% 39%", hoverShape: "52% 48% 47% 53% / 58% 56% 44% 42%", gradient: "linear-gradient(165deg,#ff4d75 0%,#ff3f63 56%,#ef3358 100%)" },
+    { id: "accessible", label: "Accessible & Compliant", slug: "accessible", color: "#e11d48", type: "peripheral", x: -412, y: -92, width: 184, height: 184, contentPlace: "center", labelSize: "small", shape: "66% 34% 58% 42% / 44% 63% 37% 56%", hoverShape: "61% 39% 53% 47% / 47% 59% 41% 53%", gradient: "linear-gradient(165deg,#ff4d7b 0%,#f43362 56%,#e61f4e 100%)" },
+    { id: "discovery", label: "Discovery", slug: "discovery", color: "#0ea5e9", type: "peripheral", x: -344, y: 52, width: 196, height: 176, contentPlace: "center", labelSize: "small", shape: "45% 55% 62% 38% / 56% 45% 55% 44%", hoverShape: "49% 51% 58% 42% / 52% 48% 52% 48%", gradient: "linear-gradient(165deg,#35b8f4 0%,#18a8ed 56%,#0d93d4 100%)" },
+    { id: "qa", label: "Quality Assurance", slug: "quality-assurance", color: "#a855f7", type: "peripheral", x: -420, y: 214, width: 178, height: 178, contentPlace: "center", labelSize: "small", shape: "53% 47% 49% 51% / 57% 46% 54% 43%", hoverShape: "50% 50% 46% 54% / 54% 49% 51% 46%", gradient: "linear-gradient(165deg,#b96bfa 0%,#a356f5 56%,#9348e4 100%)" },
+    { id: "desktop", label: "Desktop Development", slug: "desktop-development", color: "#4ade80", type: "peripheral", x: 408, y: -18, width: 276, height: 158, contentPlace: "center", labelSize: "small", shape: "58% 42% 52% 48% / 62% 56% 44% 38%", hoverShape: "54% 46% 49% 51% / 58% 52% 48% 42%", gradient: "linear-gradient(165deg,#8ae45f 0%,#69d94e 56%,#49c944 100%)" },
+    { id: "wearables", label: "Wearable Devices", slug: "wearables", color: "#f43f5e", type: "peripheral", x: 404, y: 120, width: 184, height: 162, contentPlace: "center", labelSize: "small", shape: "41% 59% 47% 53% / 63% 40% 60% 37%", hoverShape: "45% 55% 50% 50% / 60% 44% 56% 40%", gradient: "linear-gradient(165deg,#ff5e75 0%,#ff4a66 56%,#ef3459 100%)" },
 ];
+
+const bubbleSurfaceById: Record<string, string> = {
+    mobile: "radial-gradient(120% 100% at 30% 16%,rgba(146,170,255,0.46) 0%,rgba(146,170,255,0) 55%),radial-gradient(90% 80% at 78% 90%,rgba(42,74,224,0.62) 0%,rgba(42,74,224,0) 64%),linear-gradient(165deg,#6b82ff 0%,#4d67f8 48%,#3758df 100%)",
+    "cutting-edge": "radial-gradient(130% 90% at 20% 12%,rgba(212,255,150,0.52) 0%,rgba(212,255,150,0) 54%),radial-gradient(90% 80% at 82% 86%,rgba(49,161,64,0.46) 0%,rgba(49,161,64,0) 62%),linear-gradient(165deg,#9be95f 0%,#62d663 56%,#47c35d 100%)",
+    digital: "radial-gradient(120% 95% at 24% 14%,rgba(182,143,255,0.47) 0%,rgba(182,143,255,0) 54%),radial-gradient(90% 90% at 78% 84%,rgba(90,52,198,0.56) 0%,rgba(90,52,198,0) 64%),linear-gradient(165deg,#8f67f7 0%,#764fe7 55%,#653fda 100%)",
+    web: "radial-gradient(115% 94% at 24% 18%,rgba(255,174,180,0.52) 0%,rgba(255,174,180,0) 54%),radial-gradient(90% 90% at 82% 88%,rgba(220,43,93,0.48) 0%,rgba(220,43,93,0) 64%),linear-gradient(165deg,#ff6f75 0%,#ff4f65 54%,#f13f5d 100%)",
+    design: "radial-gradient(120% 98% at 26% 16%,rgba(255,236,182,0.5) 0%,rgba(255,236,182,0) 56%),radial-gradient(90% 85% at 80% 86%,rgba(214,124,0,0.43) 0%,rgba(214,124,0,0) 64%),linear-gradient(165deg,#ffc56a 0%,#f7ac33 54%,#ee9808 100%)",
+    "ai-features": "radial-gradient(115% 78% at 24% 16%,rgba(255,148,172,0.48) 0%,rgba(255,148,172,0) 52%),radial-gradient(80% 70% at 82% 90%,rgba(218,27,84,0.44) 0%,rgba(218,27,84,0) 62%),linear-gradient(165deg,#ff4d75 0%,#ff3f63 56%,#ef3358 100%)",
+    "ai-assisted": "radial-gradient(115% 78% at 24% 16%,rgba(255,148,172,0.48) 0%,rgba(255,148,172,0) 52%),radial-gradient(80% 70% at 82% 90%,rgba(218,27,84,0.44) 0%,rgba(218,27,84,0) 62%),linear-gradient(165deg,#ff4d75 0%,#ff3f63 56%,#ef3358 100%)",
+    accessible: "radial-gradient(120% 88% at 20% 14%,rgba(255,162,183,0.44) 0%,rgba(255,162,183,0) 56%),radial-gradient(80% 72% at 84% 88%,rgba(208,23,73,0.42) 0%,rgba(208,23,73,0) 63%),linear-gradient(165deg,#ff4d7b 0%,#f43362 56%,#e61f4e 100%)",
+    discovery: "radial-gradient(120% 88% at 24% 12%,rgba(132,220,255,0.44) 0%,rgba(132,220,255,0) 56%),radial-gradient(88% 76% at 82% 86%,rgba(12,133,193,0.4) 0%,rgba(12,133,193,0) 62%),linear-gradient(165deg,#35b8f4 0%,#18a8ed 56%,#0d93d4 100%)",
+    qa: "radial-gradient(120% 88% at 18% 12%,rgba(214,171,255,0.45) 0%,rgba(214,171,255,0) 54%),radial-gradient(84% 72% at 82% 86%,rgba(123,57,206,0.42) 0%,rgba(123,57,206,0) 62%),linear-gradient(165deg,#b96bfa 0%,#a356f5 56%,#9348e4 100%)",
+    desktop: "radial-gradient(120% 88% at 22% 14%,rgba(192,255,152,0.44) 0%,rgba(192,255,152,0) 56%),radial-gradient(88% 74% at 82% 86%,rgba(62,162,47,0.4) 0%,rgba(62,162,47,0) 62%),linear-gradient(165deg,#8ae45f 0%,#69d94e 56%,#49c944 100%)",
+    wearables: "radial-gradient(120% 88% at 20% 14%,rgba(255,169,188,0.44) 0%,rgba(255,169,188,0) 56%),radial-gradient(88% 76% at 84% 86%,rgba(209,28,82,0.42) 0%,rgba(209,28,82,0) 62%),linear-gradient(165deg,#ff5e75 0%,#ff4a66 56%,#ef3459 100%)",
+};
+
+const zIndexByType: Record<ServiceBubble["type"], number> = {
+    peripheral: 22,
+    corner: 15,
+    "small-top": 28,
+    "small-bottom": 28,
+    center: 50,
+};
+
+const contentPlaceClasses: Record<ContentPlace, string> = {
+    center: "items-center justify-center text-center",
+    "top-left": "items-start justify-start text-left pt-8 pl-8",
+    "top-right": "items-end justify-start text-right pt-8 pr-8",
+    "bottom-left": "items-start justify-end text-left pb-8 pl-8",
+    "bottom-right": "items-end justify-end text-right pb-8 pr-8",
+};
+
+const labelLinesById: Record<string, string[]> = {
+    mobile: ["Mobile", "Development"],
+    "cutting-edge": ["Cutting Edge"],
+    digital: ["Digital", "Transformation"],
+    web: ["Web", "Development"],
+    design: ["Design"],
+    "ai-features": ["AI Features", "Integration"],
+    "ai-assisted": ["AI Assisted", "Development"],
+    accessible: ["Accessible &", "Compliant"],
+    discovery: ["Discovery"],
+    qa: ["Quality", "Assurance"],
+    desktop: ["Desktop", "Development"],
+    wearables: ["Wearable", "Devices"],
+};
+
+const labelSizeClass: Record<NonNullable<ServiceBubble["labelSize"]>, string> = {
+    center: "text-[30px] leading-[1.03] md:text-[32px]",
+    corner: "text-[20px] leading-[1.06] md:text-[22px]",
+    small: "text-[14px] leading-[1.15] md:text-[16px]",
+};
+
+const BubbleCluster = () => {
+    const navigate = useNavigate();
+    const sorted = [...serviceBubbles].sort((a, b) => zIndexByType[a.type] - zIndexByType[b.type]);
+    const clusterXScale = 1.1;
+    const clusterScale = 0.92;
+    const clusterWidthScale = 1.08;
+
+    const renderLabel = (bubble: ServiceBubble) => {
+        const lines = labelLinesById[bubble.id] ?? [bubble.label];
+        const sizeClass = labelSizeClass[bubble.labelSize ?? "small"];
+
+        return (
+            <span
+                className={`font-body font-extrabold tracking-[-0.01em] text-white ${sizeClass}`}
+                style={{ textShadow: "0 2px 10px rgba(0,0,0,0.25)" }}
+            >
+                {lines.map((line, index) => (
+                    <React.Fragment key={`${bubble.id}-${line}`}>
+                        {line}
+                        {index < lines.length - 1 ? <br /> : null}
+                    </React.Fragment>
+                ))}
+            </span>
+        );
+    };
+
+    const renderBubbleBackdrop = (bubble: ServiceBubble) => {
+        if (bubble.id === "mobile") {
+            return (
+                <>
+                    <svg viewBox="0 0 100 100" className="absolute inset-0 h-full w-full opacity-45">
+                        <path d="M14 84 C25 66 33 64 42 71 C50 77 59 92 68 88" stroke="rgba(255,255,255,0.2)" strokeWidth="0.6" fill="none" />
+                        <path d="M64 79 C74 63 82 61 88 67" stroke="rgba(255,255,255,0.2)" strokeWidth="0.6" fill="none" />
+                        <path d="M23 73 L23 82 M26 73 L26 82 M29 73 L29 82 M32 73 L32 82" stroke="rgba(255,255,255,0.34)" strokeWidth="0.4" />
+                        <path d="M69 76 L69 85 M72 76 L72 85 M75 76 L75 85 M78 76 L78 85" stroke="rgba(255,255,255,0.34)" strokeWidth="0.4" />
+                    </svg>
+                    <div className="absolute left-[7%] bottom-[12%] h-[40%] w-[22%] rounded-[40%] bg-white/8 blur-[1px]" />
+                    <div className="absolute right-[6%] bottom-[10%] h-[42%] w-[24%] rounded-[42%] bg-white/7 blur-[1px]" />
+                </>
+            );
+        }
+
+        if (bubble.id === "cutting-edge") {
+            return (
+                <>
+                    <svg viewBox="0 0 100 100" className="absolute inset-0 h-full w-full opacity-45">
+                        <path d="M8 58 C17 52 24 57 32 50 C41 43 53 43 62 49" stroke="rgba(255,255,255,0.24)" strokeWidth="0.45" fill="none" />
+                        <path d="M8 66 C18 60 27 65 36 58 C46 50 57 52 68 58" stroke="rgba(255,255,255,0.22)" strokeWidth="0.45" fill="none" />
+                        <path d="M8 74 C18 68 29 72 40 66 C50 60 62 61 75 70" stroke="rgba(255,255,255,0.2)" strokeWidth="0.45" fill="none" />
+                    </svg>
+                    <div className="absolute left-[8%] top-[43%] h-[34%] w-[34%] rounded-full border border-white/25" />
+                    <div className="absolute left-[14%] top-[49%] h-[24%] w-[24%] rounded-full border border-white/18" />
+                </>
+            );
+        }
+
+        if (bubble.id === "digital") {
+            return (
+                <>
+                    <svg viewBox="0 0 100 100" className="absolute inset-0 h-full w-full opacity-5">
+                        <path d="M15 26 L87 62" stroke="white" strokeWidth="0.8" />
+                    </svg>
+                    <svg viewBox="0 0 100 100" className="absolute inset-0 h-full w-full opacity-45">
+                        <ellipse cx="58" cy="71" rx="19" ry="8" fill="none" stroke="rgba(255,255,255,0.55)" strokeWidth="0.6" />
+                        <ellipse cx="58" cy="71" rx="24" ry="12" fill="none" stroke="rgba(255,255,255,0.35)" strokeWidth="0.5" />
+                        <path d="M47 58 C54 56 60 56 67 58" stroke="rgba(255,255,255,0.45)" strokeWidth="0.5" fill="none" />
+                    </svg>
+                    <div className="absolute left-[42%] top-[34%] h-[38%] w-[34%] rounded-[44px] border border-white/25" />
+                </>
+            );
+        }
+
+        if (bubble.id === "web") {
+            return (
+                <>
+                    <svg viewBox="0 0 100 100" className="absolute inset-0 h-full w-full opacity-45">
+                        <circle cx="32" cy="70" r="33" fill="none" stroke="rgba(255,255,255,0.22)" strokeWidth="0.5" />
+                        <circle cx="45" cy="74" r="27" fill="none" stroke="rgba(255,255,255,0.18)" strokeWidth="0.45" />
+                    </svg>
+                </>
+            );
+        }
+
+        if (bubble.id === "design") {
+            return (
+                <>
+                    <svg viewBox="0 0 100 100" className="absolute inset-0 h-full w-full opacity-45">
+                        <path d="M61 40 L83 54" stroke="rgba(255,255,255,0.45)" strokeWidth="0.8" />
+                        <path d="M58 43 L80 57" stroke="rgba(255,255,255,0.22)" strokeWidth="0.5" />
+                        <path d="M35 78 C40 66 47 61 57 63 C63 65 67 65 74 62" stroke="rgba(255,255,255,0.6)" strokeWidth="0.8" fill="none" />
+                        <rect x="71" y="62" width="11" height="14" rx="2" fill="none" stroke="rgba(255,255,255,0.65)" strokeWidth="0.65" />
+                    </svg>
+                    <div className="absolute right-[18%] bottom-[16%] h-[22%] w-[18%] rounded-[12px] border border-white/40" />
+                </>
+            );
+        }
+
+        if (bubble.id === "ai-features" || bubble.id === "ai-assisted") {
+            return <div className="absolute left-[8%] top-[10%] h-[45%] w-[50%] rounded-full bg-white/10 blur-[1px]" />;
+        }
+
+        if (bubble.id === "accessible") {
+            return (
+                <svg viewBox="0 0 100 100" className="absolute inset-0 h-full w-full opacity-55">
+                    {Array.from({ length: 4 }).map((_, row) =>
+                        Array.from({ length: 4 }).map((_, col) => (
+                            <circle key={`a-${row}-${col}`} cx={20 + col * 4.6} cy={16 + row * 4.6} r="0.9" fill="rgba(255,255,255,0.75)" />
+                        ))
+                    )}
+                </svg>
+            );
+        }
+
+        if (bubble.id === "desktop" || bubble.id === "wearables") {
+            return (
+                <svg viewBox="0 0 100 100" className="absolute inset-0 h-full w-full opacity-55">
+                    {Array.from({ length: 4 }).map((_, row) =>
+                        Array.from({ length: 4 }).map((_, col) => (
+                            <circle key={`d-${row}-${col}`} cx={78 + col * 3.8} cy={58 + row * 3.8} r="0.8" fill="rgba(255,255,255,0.72)" />
+                        ))
+                    )}
+                </svg>
+            );
+        }
+
+        if (bubble.id === "discovery") {
+            return <div className="absolute right-[6%] top-[28%] h-[44%] w-[34%] rounded-full border border-white/20" />;
+        }
+
+        if (bubble.id === "qa") {
+            return (
+                <svg viewBox="0 0 100 100" className="absolute inset-0 h-full w-full opacity-[0.04]">
+                    <circle cx="28" cy="28" r="18" fill="white" />
+                </svg>
+            );
+        }
+
+        return null;
+    };
+
+    const renderIllustration = (bubble: ServiceBubble) => {
+        if (bubble.illustration === "phone") {
+            return (
+                <div className="relative h-64 w-56 flex items-center justify-center">
+                    <svg viewBox="0 0 200 250" className="h-full drop-shadow-[0_12px_22px_rgba(0,0,0,0.4)]">
+                        <rect x="62" y="24" width="78" height="156" rx="18" fill="rgba(7,12,44,0.74)" stroke="white" strokeOpacity="0.78" strokeWidth="2.5" />
+                        <rect x="66" y="30" width="70" height="140" rx="14" fill="rgba(57,86,248,0.6)" stroke="white" strokeOpacity="0.3" strokeWidth="1.2" />
+                        <rect x="92" y="36" width="20" height="3.5" rx="2" fill="rgba(255,255,255,0.65)" />
+                        <circle cx="101" cy="182" r="5" fill="rgba(255,255,255,0.65)" />
+                        <circle cx="73" cy="124" r="6.3" fill="#22d3ee" fillOpacity="0.8" stroke="white" strokeOpacity="0.8" />
+                        <path d="M73 194 C85 176 95 177 101 194 L131 250 L90 250 Z" fill="white" fillOpacity="0.88" />
+                    </svg>
+                    <div className="absolute top-[84px] right-[28px] h-10 w-28 rounded-xl bg-[#ffd32a] shadow-[0_8px_20px_rgba(0,0,0,0.28)]">
+                        <div className="ml-4 mt-2.5 h-2.5 w-14 rounded-full bg-white/85" />
+                    </div>
+                    <div className="absolute top-[104px] right-[14px] h-11 w-20 rounded-xl bg-white shadow-[0_8px_18px_rgba(0,0,0,0.24)]">
+                        <div className="ml-2 mt-3 h-3 w-12 rounded-full bg-[#f3f4f6]" />
+                    </div>
+                </div>
+            );
+        }
+
+        if (bubble.illustration === "watch") {
+            return (
+                <div className="relative mt-4 h-44 w-44 flex items-center justify-center">
+                    <svg viewBox="0 0 180 180" className="h-full rotate-[-18deg]">
+                        <rect x="72" y="6" width="36" height="56" rx="10" fill="white" fillOpacity="0.24" />
+                        <rect x="72" y="118" width="36" height="56" rx="10" fill="white" fillOpacity="0.24" />
+                        <circle cx="90" cy="90" r="58" fill="rgba(255,255,255,0.12)" stroke="white" strokeOpacity="0.72" strokeWidth="2.4" />
+                        <circle cx="90" cy="90" r="44" fill="rgba(45,178,72,0.48)" stroke="white" strokeOpacity="0.76" strokeWidth="1.8" />
+                        <circle cx="90" cy="90" r="23" fill="none" stroke="white" strokeOpacity="0.62" strokeWidth="1.2" strokeDasharray="2 2" />
+                    </svg>
+                </div>
+            );
+        }
+
+        if (bubble.illustration === "tablet") {
+            return (
+                <div className="relative mt-4 h-44 w-52 flex items-center justify-center">
+                    <svg viewBox="0 0 220 220" className="h-full">
+                        <g transform="rotate(-32 110 110)">
+                            <rect x="66" y="34" width="92" height="142" rx="16" fill="rgba(255,255,255,0.22)" stroke="white" strokeOpacity="0.86" strokeWidth="2.2" />
+                            <rect x="72" y="48" width="80" height="102" rx="8" fill="rgba(255,255,255,0.78)" />
+                            <circle cx="112" cy="162" r="4.5" fill="rgba(118,80,223,0.86)" />
+                        </g>
+                        <ellipse cx="122" cy="170" rx="56" ry="20" fill="none" stroke="rgba(255,255,255,0.6)" strokeWidth="1.6" />
+                        <ellipse cx="124" cy="170" rx="42" ry="14" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="1.2" />
+                    </svg>
+                </div>
+            );
+        }
+
+        if (bubble.illustration === "laptop") {
+            return (
+                <div className="relative mb-2 h-36 w-52 flex items-center justify-center">
+                    <svg viewBox="0 0 220 160" className="h-full">
+                        <rect x="56" y="36" width="108" height="66" rx="8" fill="rgba(255,255,255,0.2)" stroke="white" strokeOpacity="0.82" strokeWidth="2.2" />
+                        <rect x="62" y="42" width="96" height="52" rx="4" fill="rgba(255,255,255,0.26)" />
+                        <path d="M44 102 L176 102 L194 118 L26 118 Z" fill="rgba(255,255,255,0.48)" />
+                        <rect x="98" y="107" width="24" height="4" rx="2" fill="rgba(255,255,255,0.92)" />
+                    </svg>
+                </div>
+            );
+        }
+
+        if (bubble.illustration === "hand") {
+            return (
+                <div className="relative mb-2 h-44 w-48 flex items-center justify-center">
+                    <svg viewBox="0 0 220 180" className="h-full">
+                        <path d="M40 164 C58 121 81 105 109 113 C121 116 132 119 145 116 C160 113 169 104 179 88" stroke="white" strokeWidth="4" fill="none" strokeLinecap="round" />
+                        <circle cx="106" cy="96" r="22" fill="rgba(255,255,255,0.1)" stroke="white" strokeOpacity="0.82" strokeWidth="1.8" />
+                        <rect x="155" y="58" width="34" height="42" rx="5" fill="rgba(255,255,255,0.26)" stroke="white" strokeOpacity="0.9" strokeWidth="1.5" />
+                    </svg>
+                </div>
+            );
+        }
+
+        return null;
+    };
+
+    return (
+        <section className="relative min-h-[650px] overflow-hidden pt-8 pb-20 z-10">
+            <div className="relative w-full flex items-center justify-center">
+                <div className="relative h-[650px] w-full" style={{ maxWidth: "100vw" }}>
+                    {sorted.map((bubble) => {
+                        const labelNode = renderLabel(bubble);
+                        const illustrationNode = renderIllustration(bubble);
+                        const isMobile = bubble.id === "mobile";
+                        const movingIllustrationNode = illustrationNode ? (
+                            <div className="transition-transform duration-300 ease-out group-hover:-translate-y-2 group-hover:translate-x-1">
+                                {illustrationNode}
+                            </div>
+                        ) : null;
+
+                        return (
+                            <div
+                                key={bubble.id}
+                                className="absolute left-1/2 top-1/2"
+                                style={{
+                                    transform: `translate(calc(-50% + ${bubble.x * clusterXScale * clusterScale}px), calc(-50% + ${bubble.y * clusterScale}px))`,
+                                    zIndex: zIndexByType[bubble.type],
+                                }}
+                            >
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0.95 }}
+                                    animate={{ opacity: 1, scale: 1, rotate: 0, borderRadius: bubble.shape ?? "50%" }}
+                                    whileHover={{
+                                        scale: bubble.type === "center" ? 1.05 : bubble.type === "peripheral" ? 1.07 : 1.06,
+                                        rotate: bubble.type === "center" ? 2.2 : bubble.type === "peripheral" ? 5.4 : 3.8,
+                                        borderRadius: bubble.hoverShape ?? bubble.shape ?? "50%",
+                                    }}
+                                    transition={{
+                                        opacity: { duration: 0.35, ease: "easeOut" },
+                                        scale: { duration: 0.3, ease: "easeOut" },
+                                        rotate: { duration: 0.45, ease: [0.22, 1, 0.36, 1] },
+                                        borderRadius: { duration: 0.45, ease: "easeOut" },
+                                    }}
+                                    whileTap={{ scale: 0.99 }}
+                                    onClick={() => navigate(`/services/${bubble.slug}`)}
+                                    className="group relative flex cursor-pointer overflow-hidden rounded-[50%] will-change-transform"
+                                    style={{
+                                        width: bubble.width * clusterScale * clusterWidthScale,
+                                        height: bubble.height * clusterScale,
+                                        background: bubbleSurfaceById[bubble.id] ?? bubble.gradient ?? bubble.color,
+                                        borderRadius: bubble.shape ?? "50%",
+                                        boxShadow: "0 24px 65px -20px rgba(0,0,0,0.52), inset 0 2px 10px rgba(255,255,255,0.16), inset 0 -8px 24px rgba(0,0,0,0.16)",
+                                    }}
+                                >
+                                    <div className="absolute inset-0 z-[30] pointer-events-none">
+                                        {renderBubbleBackdrop(bubble)}
+                                    </div>
+                                    {isMobile ? (
+                                        <div className="relative z-[100] flex h-full w-full flex-col items-center px-6 pt-7 pb-7 pointer-events-none">
+                                            <div className="mb-3 flex items-center gap-2 transition-transform duration-300 ease-out group-hover:-translate-y-1 group-hover:translate-x-1">
+                                                <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/20">
+                                                    <Apple size={16} className="text-white" />
+                                                </span>
+                                                <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/20">
+                                                    <Smartphone size={16} className="text-white" />
+                                                </span>
+                                            </div>
+                                            {labelNode}
+                                            <div className="mt-5 transition-transform duration-300 ease-out group-hover:-translate-y-2 group-hover:translate-x-1">{illustrationNode}</div>
+                                        </div>
+                                    ) : (
+                                        <div className="relative z-[100] flex h-full w-full flex-col px-6 py-5 pointer-events-none">
+                                            <div className={`flex h-full w-full flex-col ${contentPlaceClasses[bubble.contentPlace]} ${bubble.id === "web" ? "translate-x-2 translate-y-3" : ""}`}>
+                                                {bubble.titleFirst ? (
+                                                    <>
+                                                        {labelNode}
+                                                        {movingIllustrationNode}
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        {movingIllustrationNode}
+                                                        {labelNode}
+                                                    </>
+                                                )}
+                                            </div>
+                                        </div>
+                                    )}
+                                </motion.div>
+                            </div>
+                        );
+                    })}
+                </div>
+            </div>
+        </section>
+    );
+};
 
 const verticals = [
     {
@@ -130,13 +502,13 @@ const techItems = [
 
 const WhatWeDo = () => {
     return (
-        <div className="min-h-screen bg-[#0c0d15] text-white ferret-home">
+        <div className="min-h-screen bg-[#161618] text-white ferret-home">
             <Navbar />
 
             {/* Combined Hero & Bubble Section with shared background */}
             <div className="relative">
                 <div className="absolute inset-x-0 top-0 z-0 h-full w-full">
-                    <div className="absolute inset-0 bg-[#0c0d15]" />
+                    <div className="absolute inset-0 bg-[#161618]" />
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(48,64,156,0.15)_0%,rgba(12,13,32,0)_70%)]" />
                     <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(#ffffff 0.5px, transparent 0.5px)', backgroundSize: '30px 30px' }} />
                 </div>
@@ -166,98 +538,11 @@ const WhatWeDo = () => {
                     </motion.div>
                 </section>
 
-                {/* Bubble Cluster Section integrated into the same relative context */}
-                <section className="relative min-h-[650px] overflow-hidden pt-0 pb-16 z-10">
-                    <div className="relative w-full flex items-center justify-center">
-                        <div className="relative h-[650px] w-full" style={{ maxWidth: '100vw' }}>
-                            {serviceBubbles.map((bubble) => {
-                                const Icon = bubble.icon;
-                                const sizeClasses = {
-                                    xl: "h-[380px] w-[380px] z-[50]",
-                                    largePlus: "h-[340px] w-[340px] z-[20]",
-                                    large: "h-[320px] w-[320px] z-[20]",
-                                    medium: "h-[200px] w-[200px] z-[15]",
-                                    oval: "h-[140px] w-[280px] z-[15]",
-                                    smallPlus: "h-[170px] w-[170px] z-[10]",
-                                    small: "h-[150px] w-[150px] z-[5]"
-                                };
-                                const currentSizeClass = sizeClasses[bubble.size as keyof typeof sizeClasses] || sizeClasses.medium;
-
-                                return (
-                                    <div key={bubble.id} className="absolute left-1/2 top-1/2" style={{ transform: `translate(calc(-50% + ${bubble.x}px), calc(-50% + ${bubble.y}px))` }}>
-                                        <motion.div
-                                            initial={{ scale: 0, opacity: 0 }}
-                                            whileInView={{ scale: 1, opacity: 1 }}
-                                            whileHover={{ scale: 1.05, borderRadius: bubble.morph, transition: { type: "spring", stiffness: 100, damping: 30, duration: 0.6 } }}
-                                            className={`flex flex-col items-center justify-center text-center shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] pointer-events-auto cursor-pointer transition-colors duration-500 overflow-visible ${currentSizeClass}`}
-                                            style={{ borderRadius: bubble.size === 'oval' ? '50%' : '50%', backgroundColor: bubble.color }}
-                                        >
-                                            <div className="relative z-[100] flex flex-col items-center px-10" style={{ pointerEvents: 'none' }}>
-                                                {bubble.illustration === "phone" ? (
-                                                    <div className="relative mb-8 h-56 w-full flex items-center justify-center">
-                                                        <svg viewBox="0 0 120 180" className="h-full drop-shadow-2xl">
-                                                            <rect x="30" y="15" width="60" height="110" rx="10" fill="white" fillOpacity="0.1" stroke="white" strokeWidth="2.5" />
-                                                            <rect x="33" y="20" width="54" height="95" rx="6" fill="white" fillOpacity="0.15" />
-                                                            <circle cx="60" cy="130" r="4" fill="white" fillOpacity="0.6" />
-                                                            <rect x="45" y="35" width="30" height="20" rx="2" fill="white" fillOpacity="0.3" stroke="white" strokeWidth="1" />
-                                                            <rect x="45" y="58" width="30" height="20" rx="2" fill="white" fillOpacity="0.3" stroke="white" strokeWidth="1" />
-                                                            <rect x="45" y="81" width="30" height="20" rx="2" fill="white" fillOpacity="0.3" stroke="white" strokeWidth="1" />
-                                                        </svg>
-                                                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[55%] flex gap-2">
-                                                            <Apple size={18} className="text-white/90" />
-                                                            <Smartphone size={18} className="text-white/90" />
-                                                        </div>
-                                                    </div>
-                                                ) : bubble.illustration === "watch" ? (
-                                                    <div className="relative mb-6 h-32 w-32 flex items-center justify-center">
-                                                        <svg viewBox="0 0 100 100" className="h-full rotate-[-15deg]">
-                                                            <rect x="35" y="10" width="30" height="80" rx="4" fill="white" fillOpacity="0.1" stroke="white" strokeWidth="1" />
-                                                            <rect x="30" y="30" width="40" height="40" rx="8" fill="white" fillOpacity="0.3" stroke="white" strokeWidth="2" />
-                                                            <circle cx="50" cy="50" r="10" stroke="white" fill="none" strokeWidth="1" strokeDasharray="2 2" />
-                                                        </svg>
-                                                    </div>
-                                                ) : bubble.illustration === "tablet" ? (
-                                                    <div className="relative mb-6 h-36 w-48 flex items-center justify-center">
-                                                        <svg viewBox="0 0 150 100" className="h-full">
-                                                            <rect x="20" y="10" width="110" height="80" rx="6" fill="white" fillOpacity="0.1" stroke="white" strokeWidth="2" />
-                                                            <rect x="25" y="15" width="100" height="65" rx="3" fill="white" fillOpacity="0.4" />
-                                                            <circle cx="135" cy="50" r="2" fill="white" />
-                                                        </svg>
-                                                    </div>
-                                                ) : bubble.illustration === "laptop" ? (
-                                                    <div className="relative mb-6 h-32 w-48 flex items-center justify-center">
-                                                        <svg viewBox="0 0 150 100" className="h-full">
-                                                            <rect x="30" y="20" width="90" height="55" rx="4" fill="white" fillOpacity="0.2" stroke="white" strokeWidth="2" />
-                                                            <path d="M20 75 L130 75 L140 85 L10 85 Z" fill="white" fillOpacity="0.4" />
-                                                            <rect x="65" y="78" width="20" height="3" rx="1" fill="white" />
-                                                        </svg>
-                                                    </div>
-                                                ) : bubble.illustration === "hand" ? (
-                                                    <div className="relative mb-6 h-40 w-40 flex items-center justify-center">
-                                                        <svg viewBox="0 0 100 100" className="h-full">
-                                                            <path d="M20 80 Q40 40 60 50 Q80 60 90 40" stroke="white" strokeWidth="3" fill="none" strokeLinecap="round" />
-                                                            <circle cx="40" cy="40" r="15" fill="white" fillOpacity="0.1" stroke="white" strokeWidth="1" />
-                                                            <rect x="70" y="20" width="20" height="25" rx="2" fill="white" fillOpacity="0.3" stroke="white" strokeWidth="1" />
-                                                        </svg>
-                                                    </div>
-                                                ) : null}
-                                                <span className={`font-display font-black leading-none uppercase tracking-tighter text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] ${bubble.size === "xl" ? "text-2xl" : bubble.size === "large" || bubble.size === "largePlus" ? "text-lg" : bubble.size === "oval" ? "text-sm" : bubble.size === "medium" ? "text-base" : "text-sm"}`} style={{ textShadow: '0 2px 8px rgba(0,0,0,0.9), 0 0 2px rgba(0,0,0,0.5)' }}>
-                                                    {bubble.label.split(' ').map((word, i) => (
-                                                        <React.Fragment key={i}>{word}<br /></React.Fragment>
-                                                    ))}
-                                                </span>
-                                            </div>
-                                        </motion.div>
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    </div>
-                </section>
+                <BubbleCluster />
             </div>
 
             {/* Verticals Section */}
-            <section className="bg-[#0c0d15] py-24 relative overflow-hidden">
+            <section className="bg-[#161618] py-24 relative overflow-hidden">
                 <div className="absolute top-1/2 left-1/4 -translate-y-1/2 opacity-5">
                     <Users size={300} />
                 </div>
@@ -308,7 +593,7 @@ const WhatWeDo = () => {
             {/* Cutting Edge Technologies */}
             <section className="bg-black py-0 text-center relative overflow-hidden">
                 <div className="container mx-auto px-0 max-w-full">
-                    <div className="bg-[#0c0d15] py-24 px-4">
+                    <div className="bg-[#161618] py-24 px-4">
                         <h2 className="mb-6 font-display text-4xl font-black md:text-6xl">Cutting Edge Technologies</h2>
                         <p className="mx-auto  max-w-3xl text-base md:text-lg text-white/60">
                             We offer advanced solutions to implement our clients' ideas, which require innovative technologies such as proximity and pressure sensors, augmented reality, and many more.
