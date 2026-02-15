@@ -2,7 +2,7 @@ import { AnimatePresence, motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import type { LucideIcon } from "lucide-react";
-import { ArrowRight, ChevronLeft, ChevronRight, Cpu, Globe, Monitor, Smartphone, UsersRound } from "lucide-react";
+import { ArrowRight, Brain, ChevronLeft, ChevronRight, Cpu, Globe, Monitor, Smartphone, UsersRound } from "lucide-react";
 import { openWhatsAppChat } from "@/service/whatsapp/whatsappService";
 
 interface ServiceItem {
@@ -54,9 +54,9 @@ const services: ServiceItem[] = [
     glow: "0 14px 45px rgba(247, 165, 87, 0.35)",
   },
   {
-    icon: Cpu,
-    title: ["IoT/Emerging", "Tech"],
-    slug: "iot-emerging-tech",
+    icon: Brain,
+    title: ["AI/ML", "Development"],
+    slug: "ai-ml-development",
     gradient: "linear-gradient(150deg, #7FD34C 0%, #3EBA46 100%)",
     glow: "0 14px 45px rgba(94, 198, 77, 0.35)",
   },

@@ -4,7 +4,7 @@ import { Menu, X } from "lucide-react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 
 const navLinks = [
-  { label: "WHAT WE DO", to: "/what-we-do" },
+  { label: "SERVICES", to: "/what-we-do" },
   { label: "PORTFOLIO", to: "/work" },
   { label: "CAREERS", to: "/careers" },
   { label: "CONTACTS", to: "/contact" },

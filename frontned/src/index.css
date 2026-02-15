@@ -595,6 +595,13 @@
   width: 160px;
 }
 
+.achievements__icon {
+  width: 72px;
+  height: 72px;
+  display: block;
+  object-fit: contain;
+}
+
 .achievements__text {
   margin: 0;
   padding: 6px 0 0;
@@ -882,6 +889,11 @@
 
   .achievements__icon-wrap {
     width: 150px;
+  }
+
+  .achievements__icon {
+    width: 64px;
+    height: 64px;
   }
 
   .achievements__text {

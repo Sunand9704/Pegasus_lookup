@@ -3,24 +3,24 @@ import TwinklingStars from "./TwinklingStars";
 
 const awards = [
   {
-    icon: "/assets/hero/i-48-apple.svg",
-    title: "2 APPS IN APP STORE'S",
-    subtitle: "TRENDS OF THE YEAR",
+    icon: "/assets/achivements/1.png",
+    title: " UI/UX Development",
+    subtitle: "easy user interface",
   },
   {
-    icon: "/assets/hero/i-48-clutch.svg",
-    title: "GLOBAL LEADERS, TOP B2B",
-    subtitle: "COMPANIES, TOP DEVELOPERS",
+    icon: "/assets/achivements/2.png",
+    title: "Software development technologie",
+    subtitle: "Maintenance",
   },
   {
-    icon: "/assets/hero/i-48-css-new.svg",
-    title: "UX, UI, INNOVATION,",
-    subtitle: "SPECIAL KUDOS CSS AWARDS",
+    icon: "/assets/achivements/3.png",
+    title: "Artificial Intelligence &",
+    subtitle: " Machine learning",
   },
   {
-    icon: "/assets/hero/i-48-top.svg",
-    title: "TOP ANDROID APP",
-    subtitle: "DEVELOPMENT COMPANY",
+    icon: "/assets/achivements/4.png",
+    title: "we develop android ",
+    subtitle: "applications",
   },
 ];
 
@@ -32,11 +32,11 @@ const Hero = () => {
       <div className="hero__content">
         <div className="hero__intro">
           <h1 className="hero__title">
-            <span>BUILDING TOMORROW'S SOLUTIONS.</span>
-            <span className="hero__title-accent">GLOBALLY.</span>
+            <span>ADVANCING NEXT </span>
+            <span className="hero__title-accent">GENERATION.</span>
           </h1>
 
-          <p className="hero__proof">Trusted expertise with numerous mobile and wearable applications featured globally.</p>
+          <p className="hero__proof">Experienced software developers delivering innovative software and Android applications recognized worldwide.</p>
 
           <Link to="/contact" className="button button--primary hero__cta">
             <span className="button__content">
@@ -46,10 +46,14 @@ const Hero = () => {
         </div>
 
         <ul className="achievements">
-          {awards.map((award) => (
+          {awards.map((award, index) => (
             <li key={award.title} className="achievements__item">
               <div className="achievements__icon-wrap">
-                <img src={award.icon} alt="" width={48} height={48} />
+                <img
+                  src={award.icon}
+                  alt=""
+                  className={`achievements__icon ${index === 1 || index === 2 ? "achievements__icon--large" : ""}`}
+                />
               </div>
               <p className="achievements__text">{award.title}</p>
               <p className="achievements__text">{award.subtitle}</p>

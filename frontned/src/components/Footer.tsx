@@ -2,10 +2,10 @@ import { Facebook, Instagram, Linkedin, X } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const socialLinks = [
-  { label: "LinkedIn", href: "https://www.linkedin.com", icon: Linkedin },
-  { label: "Instagram", href: "https://www.instagram.com", icon: Instagram },
-  { label: "X", href: "https://x.com", icon: X },
-  { label: "Facebook", href: "https://www.facebook.com", icon: Facebook },
+  { label: "LinkedIn", href: "https://www.linkedin.com/company/ferret-private-limited/?viewAsMember=true", icon: Linkedin },
+  // { label: "Instagram", href: "https://www.instagram.com", icon: Instagram },
+  { label: "X", href: "https://x.com/FERRET_Pvt_Ltd", icon: X },
+  // { label: "Facebook", href: "https://www.facebook.com", icon: Facebook },
 ];
 
 const footerBadges = [
@@ -30,7 +30,7 @@ const Footer = () => {
             <Link to="/" className="inline-flex items-center">
               <img src="/assets/brand/ferret-logo-light.svg" alt="Ferret Technologies" className="h-[50px] w-auto" />
             </Link>
-            <p className="mt-3 text-[12px] font-extrabold uppercase tracking-[0.5px]">(c) 2025-{year} Ferret Private Limited Company</p>
+            <p className="mt-3 text-[12px] font-extrabold uppercase tracking-[0.5px]">(c) 2025-{year} Ferret private limited (company)</p>
             <a
               href="mailto:info@ferrettechnologies.com"
               className="mt-1.5 inline-block text-[13px] font-normal text-white/75 transition-colors hover:text-[#ff0044]"

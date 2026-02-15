@@ -1,6 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Smartphone, Globe, Monitor, UsersRound, Cpu, ArrowLeft, Watch, Palette, Zap, Search, ShieldCheck, Accessibility, Terminal } from "lucide-react";
+import { Smartphone, Globe, Monitor, UsersRound, Cpu, ArrowLeft, Watch, Palette, Zap, Search, ShieldCheck, Accessibility, Terminal, Brain } from "lucide-react";
 import Navbar from "@/components/Navbar";
 
 const serviceData = {
@@ -173,17 +173,17 @@ const serviceData = {
             "Flexible Engagement Models"
         ]
     },
-    "iot-emerging-tech": {
-        title: "IoT / Emerging Tech",
-        icon: Cpu,
+    "ai-ml-development": {
+        title: "AI/ML Development",
+        icon: Brain,
         color: "#7FD34C",
-        description: "Stay ahead of the curve with our expertise in Internet of Things and other emerging technologies. We help you innovate and lead in your industry.",
+        description: "Scale smarter with our end-to-end AI and Machine Learning solutions. We build predictive models, recommendation engines, and high-performance neural networks that solve complex business challenges.",
         features: [
-            "IoT Hardware & Software Integration",
-            "AI & Machine Learning Implementation",
-            "Blockchain Solutions",
-            "Edge Computing",
-            "Custom Innovation Labs"
+            "Natural Language Processing (NLP)",
+            "Computer Vision & Image Analysis",
+            "Predictive Analytics & Forecasting",
+            "Machine Learning Model Operations (MLOps)",
+            "Generative AI & LLM Integration"
         ]
     }
 };
