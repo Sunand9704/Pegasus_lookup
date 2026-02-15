@@ -56,7 +56,7 @@ const About = () => {
               We Craft Digital <span className="gradient-text">Experiences</span>
             </h2>
             <p className="mt-6 text-muted-foreground leading-relaxed">
-              PepsLookUp is a team of passionate developers, designers, and strategists who turn complex ideas into elegant digital products. We've been trusted by startups and Fortune 500 companies alike to deliver solutions that scale.
+              Ferret Technologies is a team of passionate developers, designers, and strategists who turn complex ideas into elegant digital products. We've been trusted by startups and Fortune 500 companies alike to deliver solutions that scale.
             </p>
             <p className="mt-4 text-muted-foreground leading-relaxed">
               Our approach combines cutting-edge technology with human-centered design, ensuring every product we build is not only functional but delightful to use.

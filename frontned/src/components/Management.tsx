@@ -3,12 +3,12 @@ import { useState } from "react";
 
 const founders = [
     {
-        name: "Uttej Yadala",
+        name: "Yadala Uttej",
         role: "CEO & Founder",
         image: "/assets/photos/uttej yadala/uttej yadala_CEO & Founder of Ferret private limited.png",
     },
     {
-        name: "Surya Yadala",
+        name: "Yadala Surya",
         role: "Director & Cofounder",
         image: "/assets/photos/surya yadala/surya yadala_Director & Cofounder of Ferret private limited.png",
     },
@@ -77,12 +77,11 @@ const Management = () => {
                                 transition={{ duration: 0.35, ease: "easeOut" }}
                                 className="flex flex-col items-center"
                             >
-                                <h3 className="text-3xl font-display font-black text-white md:text-5xl tracking-tight">
-                                    {founder.name.split(' ')[0]}
-                                    <br />
+                                <h3 className="whitespace-nowrap text-2xl font-display font-black text-white md:text-4xl tracking-tight">
+                                    {founder.name.split(' ')[0]}{" "}
                                     <span className="text-[#ff0044]">{founder.name.split(' ')[1]}</span>
                                 </h3>
-                                <p className="mt-3 text-sm font-bold uppercase tracking-[4px] text-white/80 md:text-base">
+                                <p className="mt-3 text-xs font-bold uppercase tracking-[3px] text-white/80 md:text-sm">
                                     {founder.role}
                                 </p>
                                 <div className="mx-auto mt-4 h-1 w-12 bg-[#ff0044]" />

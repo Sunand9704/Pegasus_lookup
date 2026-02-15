@@ -6,13 +6,13 @@ const testimonials = [
   {
     name: "Sarah Chen",
     role: "CEO, FinTrack",
-    content: "PepsLookUp transformed our vision into a world-class product. Their technical expertise and design sensibility are unmatched.",
+    content: "Ferret Technologies transformed our vision into a world-class product. Their technical expertise and design sensibility are unmatched.",
     avatar: "SC",
   },
   {
     name: "Marcus Rodriguez",
     role: "Founder, EcoMarket",
-    content: "Working with PepsLookUp was a game-changer. They delivered a complex marketplace platform ahead of schedule with exceptional quality.",
+    content: "Working with Ferret Technologies was a game-changer. They delivered a complex marketplace platform ahead of schedule with exceptional quality.",
     avatar: "MR",
   },
   {
@@ -24,7 +24,7 @@ const testimonials = [
   {
     name: "David Kim",
     role: "Founder, TechStart",
-    content: "PepsLookUp provided the strategic guidance and technical execution we needed to launch our MVP in record time.",
+    content: "Ferret Technologies provided the strategic guidance and technical execution we needed to launch our MVP in record time.",
     avatar: "DK",
   },
 ];

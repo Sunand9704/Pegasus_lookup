@@ -85,7 +85,7 @@ const WorkPage = () => {
       <Navbar />
 
       {/* Tabs Navigation - Focused and Premium */}
-      <div className="relative pt-[90px] pb-0 flex justify-center z-10 bg-background">
+      <div className="relative pt-[84px] pb-0 flex justify-center z-10 bg-background">
         <div className="inline-flex items-center gap-12 px-12 py-4 rounded-t-2xl bg-[#0a0a0c] border-t border-x border-white/10 shadow-[0_-4px_20px_rgba(0,0,0,0.5)]">
           <button
             onClick={() => setActiveTab("about")}
@@ -338,4 +338,3 @@ const WorkPage = () => {
 };
 
 export default WorkPage;
-

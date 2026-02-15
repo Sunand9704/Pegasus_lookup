@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import type { LucideIcon } from "lucide-react";
 import { ArrowRight, ChevronLeft, ChevronRight, Cpu, Globe, Monitor, Smartphone, UsersRound } from "lucide-react";
+import { openWhatsAppChat } from "@/service/whatsapp/whatsappService";
 
 interface ServiceItem {
   icon: LucideIcon;
@@ -19,6 +20,9 @@ interface TechnologySlide {
   image: string;
   panelGradient: string;
 }
+
+const techHighlightImage = (fileName: string) =>
+  `/assets/tech-highlights/${fileName}`;
 
 const services: ServiceItem[] = [
   {
@@ -60,43 +64,43 @@ const services: ServiceItem[] = [
 
 const technologySlides: TechnologySlide[] = [
   {
-    id: "wearables",
-    title: "Wearable Health Platforms",
+    id: "ai-data-technologies",
+    title: "Artificial Intelligence & Data Technologies",
     description:
-      "We build companion experiences for fitness bands and smart watches, including low-latency sync, activity analytics, and battery-aware background updates for daily engagement.",
-    image: "https://images.unsplash.com/photo-1544117518-e796323146b0?q=80&w=800&auto=format&fit=crop",
+      "We build AI-powered products with data pipelines, model operations, and analytics workflows that turn raw information into practical business decisions.",
+    image: techHighlightImage("ai-data-technologies.png"),
     panelGradient: "linear-gradient(125deg, #7BE3E0 0%, #45C0CC 100%)",
   },
   {
-    id: "cloud",
-    title: "Cloud Orchestration Systems",
+    id: "cloud-infrastructure-technologies",
+    title: "Cloud & Infrastructure Technologies",
     description:
-      "Our teams design cloud-native service layers with observable APIs, resilient queue workflows, and automation-first delivery pipelines that keep releases stable at scale.",
-    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800&auto=format&fit=crop",
+      "We design scalable cloud architecture, deployment automation, and resilient infrastructure that keeps services fast, secure, and reliable under growth.",
+    image: techHighlightImage("cloud-infrastructure-technologies.png"),
     panelGradient: "linear-gradient(125deg, #8691FF 0%, #4F63E6 100%)",
   },
   {
-    id: "ai",
-    title: "AI Copilot Experiences",
+    id: "security-technologies",
+    title: "Security Technologies",
     description:
-      "From support assistants to internal productivity copilots, we ship secure AI features with prompt controls, grounded responses, and measurable business outcomes.",
-    image: "https://images.unsplash.com/photo-1507146426996-ef05306b995a?q=80&w=800&auto=format&fit=crop",
+      "We implement secure-by-design systems with modern authentication, access control, encryption, and threat monitoring to protect products and customer data.",
+    image: techHighlightImage("security-technologies.png"),
     panelGradient: "linear-gradient(125deg, #B054FF 0%, #733CDB 100%)",
   },
   {
-    id: "data",
-    title: "Data Fabric Engineering",
+    id: "software-technologies-devlopment",
+    title: "Software technologies devlopment",
     description:
-      "We connect fragmented data sources into governed pipelines with event processing, live dashboards, and fault-tolerant flows that support product and operations teams.",
-    image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc51?q=80&w=800&auto=format&fit=crop",
+      "We deliver end-to-end software development across planning, architecture, implementation, QA, and release cycles to ship dependable digital products.",
+    image: techHighlightImage("software-technologies-development.png"),
     panelGradient: "linear-gradient(125deg, #4ADACA 0%, #24B4A7 100%)",
   },
   {
-    id: "commerce",
-    title: "Commerce Service Suites",
+    id: "web-technologies",
+    title: "web Technologies",
     description:
-      "We develop modular commerce platforms covering catalog APIs, checkout services, and admin tooling so teams can roll out new channels without replatforming.",
-    image: "https://images.unsplash.com/photo-1557821552-17105176677c?q=80&w=800&auto=format&fit=crop",
+      "We craft responsive, high-performance web platforms using modern frontend and backend stacks, with focus on UX, scalability, and maintainability.",
+    image: techHighlightImage("web-technologies.png"),
     panelGradient: "linear-gradient(125deg, #8DDD53 0%, #4DB846 100%)",
   },
 ];
@@ -278,15 +282,24 @@ const TechnologyShowcase = () => {
 
 const InquiryContactPanel = () => {
   const [isConsentGiven, setIsConsentGiven] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
   const panelRef = useRef(null);
   const panelInView = useInView(panelRef, { once: true, margin: "-80px" });
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!isConsentGiven) return;
-    setIsSubmitted(true);
-    setTimeout(() => setIsSubmitted(false), 2600);
+
+    const formData = new FormData(event.currentTarget);
+    const name = String(formData.get("name") ?? "").trim();
+    const contact = String(formData.get("contact") ?? "").trim();
+    const description = String(formData.get("description") ?? "").trim();
+
+    openWhatsAppChat({
+      name,
+      contact,
+      description,
+      phoneNumber: "14157702434",
+    });
   };
 
   return (
@@ -381,7 +394,7 @@ const InquiryContactPanel = () => {
             disabled={!isConsentGiven}
             className="mt-9 inline-flex h-12 min-w-[178px] items-center justify-center gap-2 rounded-full bg-[#ff0044] px-8 text-[15px] font-semibold text-white transition-all hover:bg-[#ed164e] disabled:cursor-not-allowed disabled:opacity-55"
           >
-            {isSubmitted ? "Sent" : "Next"}
+            Next
             <ArrowRight size={18} />
           </button>
         </form>

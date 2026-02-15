@@ -1,11 +1,11 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { ArrowRight } from "lucide-react";
+import { openWhatsAppChat } from "@/service/whatsapp/whatsappService";
 
 const Contact = () => {
     const ref = useRef(null);
     const inView = useInView(ref, { once: true });
-    const [submitted, setSubmitted] = useState(false);
     const [formData, setFormData] = useState({
         name: "",
         emailOrPhone: "",
@@ -15,8 +15,14 @@ const Contact = () => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        setSubmitted(true);
-        setTimeout(() => setSubmitted(false), 3000);
+        if (!formData.acceptPrivacy) return;
+
+        openWhatsAppChat({
+            name: formData.name,
+            contact: formData.emailOrPhone,
+            description: formData.message,
+            phoneNumber: "72073 07339",
+        });
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -138,12 +144,10 @@ const Contact = () => {
                             disabled={!formData.acceptPrivacy}
                             className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-[#ff0044] text-white font-medium text-sm hover:bg-[#e6003d] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                         >
-                            {submitted ? "Message Sent!" : (
-                                <>
-                                    Next
-                                    <ArrowRight size={18} />
-                                </>
-                            )}
+                            <>
+                                Next
+                                <ArrowRight size={18} />
+                            </>
                         </button>
                     </motion.form>
                 </div>

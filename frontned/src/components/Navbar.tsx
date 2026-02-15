@@ -9,6 +9,7 @@ const navLinks = [
   { label: "CAREERS", to: "/careers" },
   { label: "CONTACTS", to: "/contact" },
 ];
+const logoSubLetters = "TECHNOLOGIES".split("");
 
 const MailIcon = () => (
   <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
@@ -24,7 +25,6 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
-  const isHomeRoute = location.pathname === "/";
   const isTransparentRoute = ["/", "/what-we-do"].includes(location.pathname);
 
   useEffect(() => {
@@ -38,25 +38,32 @@ const Navbar = () => {
   }, [location.pathname]);
 
   const showSolidBackground = scrolled || !isTransparentRoute;
+  const isLightNavbar = scrolled;
 
   return (
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`header ${showSolidBackground ? "header--solid" : "header--transparent"} ${isHomeRoute && scrolled ? "header--light" : ""
+      className={`header ${showSolidBackground ? "header--solid" : "header--transparent"} ${isLightNavbar ? "header--light" : ""
         } ${mobileOpen ? "header--mobile-open" : ""}`}
     >
       <div className="header__inner">
         <Link to="/" className="logo" aria-label="Ferret Technologies">
           <img
-            src={isHomeRoute && scrolled ? "/assets/brand/ferret-symbol.svg" : "/assets/brand/ferret-symbol-white.svg"}
+            src={isLightNavbar ? "/assets/brand/ferret-symbol.svg" : "/assets/brand/ferret-symbol-white.svg"}
             alt="Ferret Technologies"
             className="logo__img"
           />
-          <div className={`logo__text logo__wordmark ${isHomeRoute && scrolled ? "logo__wordmark--light" : "logo__wordmark--dark"}`}>
+          <div className={`logo__text logo__wordmark ${isLightNavbar ? "logo__wordmark--light" : "logo__wordmark--dark"}`}>
             <span className="logo__wordmark-main">Ferret</span>
-            <span className="logo__wordmark-sub">Technologies</span>
+            <span className="logo__wordmark-sub" aria-label="Technologies">
+              {logoSubLetters.map((letter, index) => (
+                <span key={`${letter}-${index}`} className="logo__wordmark-sub-letter" aria-hidden="true">
+                  {letter}
+                </span>
+              ))}
+            </span>
           </div>
         </Link>
 
