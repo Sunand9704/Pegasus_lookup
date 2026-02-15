@@ -10,7 +10,7 @@ const CareersPage = () => {
             <Navbar />
 
             {/* Hero Section */}
-            <section className="relative min-h-screen w-full pt-[90px] overflow-hidden flex flex-col items-center">
+            <section className="relative min-h-screen w-full pt-[84px] overflow-hidden flex flex-col items-center">
                 {/* Background Elements */}
                 <div className="absolute inset-0 z-0">
                     <TwinklingStars />

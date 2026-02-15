@@ -61,7 +61,7 @@ const AboutPage = () => {
       />
 
       {/* Tabs Section */}
-      <div className="flex border-b border-white/10 bg-black/20 backdrop-blur-sm sticky top-[90px] z-30">
+      <div className="flex border-b border-white/10 bg-black/20 backdrop-blur-sm sticky top-[84px] z-30">
         <div className="mx-auto flex w-full max-w-7xl px-4">
           <button
             onClick={() => setActiveTab("about")}
