@@ -21,7 +21,7 @@ const Contact = () => {
             name: formData.name,
             contact: formData.emailOrPhone,
             description: formData.message,
-            phoneNumber: "72073 07339",
+            phoneNumber: "7207307339",
         });
     };
 
