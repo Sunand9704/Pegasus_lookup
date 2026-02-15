@@ -10,12 +10,9 @@ import {
     Globe,
     Terminal,
     ShieldCheck,
-    Search,
     Accessibility,
     Zap,
     Users,
-    HeartPulse,
-    Activity,
     Bluetooth,
     Wifi,
     Code2,
@@ -427,31 +424,107 @@ const BubbleCluster = () => {
     );
 };
 
+type VerticalIconProps = {
+    size?: number;
+    className?: string;
+};
+
+const IndustryFocusedIcon = ({ size = 36, className }: VerticalIconProps) => (
+    <svg
+        width={size}
+        height={size}
+        viewBox="0 0 48 48"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className={className}
+        aria-hidden="true"
+    >
+        <path d="M8 38V16.5C8 15.1 9.1 14 10.5 14H20.5C21.9 14 23 15.1 23 16.5V38" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M25 38V21.5C25 20.1 26.1 19 27.5 19H37.5C38.9 19 40 20.1 40 21.5V38" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M8 38H40" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+        <path d="M12.5 20.5H18.5M12.5 25.5H18.5M12.5 30.5H18.5M29 25H36M29 30H36" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" />
+        <path d="M15.5 38V33.5M32.5 38V33.5" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" />
+    </svg>
+);
+
+const TailoredITIcon = ({ size = 36, className }: VerticalIconProps) => (
+    <svg
+        width={size}
+        height={size}
+        viewBox="0 0 48 48"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className={className}
+        aria-hidden="true"
+    >
+        <path d="M8 14H40M8 24H40M8 34H40" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+        <circle cx="17" cy="14" r="3.5" stroke="currentColor" strokeWidth="2.5" />
+        <circle cx="31" cy="24" r="3.5" stroke="currentColor" strokeWidth="2.5" />
+        <circle cx="22" cy="34" r="3.5" stroke="currentColor" strokeWidth="2.5" />
+        <path d="M34.5 9.5L38.5 13.5L31.5 20.5L27.5 16.5L34.5 9.5Z" stroke="currentColor" strokeWidth="2.3" strokeLinejoin="round" />
+    </svg>
+);
+
+const ComprehensiveTechnologyIcon = ({ size = 36, className }: VerticalIconProps) => (
+    <svg
+        width={size}
+        height={size}
+        viewBox="0 0 48 48"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className={className}
+        aria-hidden="true"
+    >
+        <rect x="17" y="17" width="14" height="14" rx="3" stroke="currentColor" strokeWidth="2.5" />
+        <path d="M24 8V14M24 34V40M8 24H14M34 24H40" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+        <path d="M13.5 13.5L17.5 17.5M34.5 34.5L30.5 30.5M34.5 13.5L30.5 17.5M13.5 34.5L17.5 30.5" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" />
+        <circle cx="24" cy="24" r="3" stroke="currentColor" strokeWidth="2.3" />
+    </svg>
+);
+
+const ClientCentricInnovationIcon = ({ size = 36, className }: VerticalIconProps) => (
+    <svg
+        width={size}
+        height={size}
+        viewBox="0 0 48 48"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className={className}
+        aria-hidden="true"
+    >
+        <circle cx="24" cy="24" r="14" stroke="currentColor" strokeWidth="2.5" />
+        <circle cx="24" cy="24" r="8" stroke="currentColor" strokeWidth="2.3" />
+        <circle cx="24" cy="24" r="2.5" fill="currentColor" />
+        <path d="M24 7V11M24 37V41M7 24H11M37 24H41" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" />
+        <path d="M30 18L39 9M34 9H39V14" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+);
+
 const verticals = [
     {
-        label: "Staff Augmentation",
-        icon: Users,
+        label: "Industry-Focused Solutions",
+        icon: IndustryFocusedIcon,
         color: "from-blue-500 to-indigo-600",
-        description: "We provide teams capable of increasing the velocity of your development or extending your technical capabilities."
+        description: "We develop scalable software and applications across multiple industries, leveraging cutting-edge technologies to meet unique client needs and regulatory standards."
     },
     {
-        label: "Healthcare",
-        icon: HeartPulse,
+        label: "Tailored IT Services",
+        icon: TailoredITIcon,
         color: "from-rose-400 to-rose-600",
-        description: "We deliver innovative healthcare software solutions that improve patient outcomes and streamline medical workflows."
+        description: "Our expertise spans web design, mobile apps, AI/ML, cloud, and cybersecurity, delivering solutions customized to each industry’s operational and compliance requirements."
     },
     {
-        label: "Fitness and Wellness",
-        icon: Activity,
+        label: "Comprehensive Technology Offerings",
+        icon: ComprehensiveTechnologyIcon,
         color: "from-violet-500 to-fuchsia-600",
-        description: "Gain insights into our development process and see how we create best in class, custom applications for the Health and Fitness industries.",
+        description: "From SaaS products to DevOps and enterprise applications, we create solutions that enhance efficiency, user experience, and industry-specific compliance.",
         hasLearnMore: true
     },
     {
-        label: "Other",
-        icon: Search,
+        label: "Client-Centric Innovation",
+        icon: ClientCentricInnovationIcon,
         color: "from-orange-400 to-orange-600",
-        description: "We have vast expertise in many other areas — Automotive, Sales, Entertainment, Social Networking, and can help our customers with a project of any scale and complexity."
+        description: "We combine agile development, advanced technologies, and industry insights to craft software solutions that address the unique challenges of each sector we serve."
     },
 ];
 
@@ -461,7 +534,7 @@ const techItems = [
         label: "Bluetooth Low Energy",
         icon: Bluetooth,
         color: "bg-[#3b82f6]",
-        detail: "Mercury has extensive experience providing solutions for BLE devices, from industrial sensors to consumer health trackers."
+        detail: "specializes in BLE device solutions, serving both industrial sensor applications and consumer health technology markets."
     },
     {
         id: "ibeacon",
@@ -475,28 +548,28 @@ const techItems = [
         label: "SDK",
         icon: Code2,
         color: "bg-[#f59e0b]",
-        detail: "We create custom software development kits that allow for seamless integration of your platform with external services and hardware."
+        detail: "Our team builds custom SDKs designed to ensure smooth interoperability with third-party services and connected hardware devices."
     },
     {
         id: "smart-tv",
         label: "Smart TV",
         icon: Tv,
         color: "bg-[#8b5cf6]",
-        detail: "Apps make smart TV rich and more useful, and we help to create outstanding experience for smart TV users across all major platforms."
+        detail: "Smart TV apps enhance functionality and user engagement, and we deliver exceptional viewing experiences across all major smart TV platforms."
     },
     {
         id: "wearables",
         label: "Wearable Devices",
         icon: Watch,
         color: "bg-[#06b6d4]",
-        detail: "From watch face design to complex biometric data processing, we build apps that make the most of wearable hardware capabilities."
+        detail: "We develop wearable apps that maximize hardware potential, from custom watch face design to sophisticated biometric data analysis."
     },
     {
         id: "appletv",
         label: "Apple TV",
         icon: Apple,
         color: "bg-[#f43f5e]",
-        detail: "We used sophisticated video and audio processing algorithms in apple TV apps to deliver optimum viewing and listening experience to customers."
+        detail: "Our connected TV apps employ sophisticated video and audio algorithms to ensure optimal playback quality and superior user experiences."
     },
 ];
 
@@ -530,10 +603,10 @@ const WhatWeDo = () => {
                         className="relative z-10 max-w-5xl"
                     >
                         <h1 className="mb-4 font-display text-4xl font-black leading-[1.05] tracking-tight text-white md:text-5xl lg:text-6xl">
-                            End-to-End Development Services
+                            Idea-to-Launch Development Services
                         </h1>
                         <p className="mx-auto max-w-2xl text-base leading-relaxed text-white/75 md:text-lg">
-                            From an idea to deployment and support, Ferret Technologies can assist you on every step of the development cycle, making a launch of a new venture or improving an existing solution seamless.
+                            From idea to deployment and support, Ferret Technologies guides you through every phase of development, making new product launches and enhancements to existing solutions seamless.
                         </p>
                     </motion.div>
                 </section>
@@ -549,7 +622,7 @@ const WhatWeDo = () => {
                 <div className="container mx-auto px-6 text-center max-w-6xl relative z-10">
                     <h2 className="mb-3 font-display text-4xl font-black md:text-5xl">Verticals</h2>
                     <p className="mx-auto mb-12 max-w-2xl text-sm md:text-base text-white/60">
-                        We've gained ample experience in app development for a wide range of industries, and making our solutions compliant with the specific requirements.
+                        We have extensive experience developing apps across diverse industries, delivering solutions tailored to meet specific regulatory and business requirements.
                     </p>
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
                         {verticals.map((v, i) => {
@@ -596,7 +669,9 @@ const WhatWeDo = () => {
                     <div className="bg-[#161618] py-24 px-4">
                         <h2 className="mb-6 font-display text-4xl font-black md:text-6xl">Cutting Edge Technologies</h2>
                         <p className="mx-auto  max-w-3xl text-base md:text-lg text-white/60">
-                            We offer advanced solutions to implement our clients' ideas, which require innovative technologies such as proximity and pressure sensors, augmented reality, and many more.
+                           We build scalable, future-ready digital solutions that help businesses grow and innovate.
+Using modern technologies and strong architecture, we deliver secure and high-performance applications.
+From idea to deployment, we create reliable tech that drives real business impact.
                         </p>
                     </div>
 

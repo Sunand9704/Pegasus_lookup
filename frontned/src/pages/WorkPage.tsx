@@ -9,64 +9,26 @@ import Portfolio from "@/components/Portfolio";
 import About from "@/components/About";
 import Management from "@/components/Management";
 
-const caseStudies = [
-  {
-    client: "NexaPay",
-    challenge: "Replace a fragile legacy dashboard while serving live financial data.",
-    result: "Launched a new analytics suite with 99.95% uptime and 3x faster report rendering.",
-    metric: "3x faster insights",
-  },
-  {
-    client: "CareBridge",
-    challenge: "Scale telehealth scheduling across multiple hospital networks.",
-    result: "Built a resilient booking workflow that reduced failed appointments by 41%.",
-    metric: "41% fewer no-shows",
-  },
-  {
-    client: "SupplyHive",
-    challenge: "Unify fragmented logistics tracking across seven regional systems.",
-    result: "Shipped a centralized control panel and event stream with real-time visibility.",
-    metric: "62% faster incident response",
-  },
-];
-
-const outcomeHighlights = [
-  {
-    icon: Target,
-    title: "Clear Product Goals",
-    text: "Every engagement starts with measurable success criteria tied to business outcomes.",
-  },
-  {
-    icon: Gauge,
-    title: "Reliable Delivery Pace",
-    text: "Tight sprint loops and weekly demos keep teams aligned and shipping with confidence.",
-  },
-  {
-    icon: TrendingUp,
-    title: "Compounding Growth",
-    text: "We build technical foundations that keep performance and release velocity improving over time.",
-  },
-];
 
 const whatWeDoCards = [
   {
     id: "web",
     title: "Web development",
-    description: "We build first-rate web applications and portals with complex and rich functionality that can cope with heavy loads adequately.",
+    description: "We develop high-quality web applications and portals with advanced functionality, designed to handle heavy traffic efficiently.",
     icon: Laptop,
     hasReadMore: false,
   },
   {
     id: "mobile",
     title: "Mobile apps",
-    description: "We develop amazing iOS and Android apps; every app we work on is visually stunning, easy to use and can be utilized by a broad range of audiences.",
+    description: "We create exceptional iOS and Android apps that are visually appealing, user-friendly, and accessible to a wide audience.",
     icon: Smartphone,
     hasReadMore: true,
   },
   {
     id: "cutting-edge",
     title: "Cutting EDGE",
-    description: "We offer highly advanced solutions to implement our clients' ideas that require innovative technology such as proximity sensors, pressure sensors, augmented reality and more.",
+    description: "We provide cutting-edge solutions to bring our clients’ ideas to life, leveraging innovative technologies such as proximity sensing.",
     icon: Zap,
     hasReadMore: false,
   },
@@ -161,7 +123,7 @@ const WorkPage = () => {
                   transition={{ duration: 0.8, delay: 0.2 }}
                   className="mx-auto mt-10 max-w-2xl text-lg md:text-xl text-white/70 leading-relaxed font-medium"
                 >
-                  We are a leading-edge software development company. Our award-winning teams build apps for iOS, Android, Web and Windows for clients who trust Ferret as their technology partner—from startup to scale.
+                  We are a cutting-edge software development company. We build apps for iOS, Android, Web, and Windows, serving clients who trust Ferret as their technology partner—from startups to large-scale enterprises.
                 </motion.p>
               </div>
             </section>
@@ -197,7 +159,7 @@ const WorkPage = () => {
                   What We Do
                 </h2>
                 <p className="mx-auto mt-4 max-w-2xl text-center text-lg text-white/70">
-                  We develop successful apps for our clients who range from startup entrepreneurs to Fortune 500s.
+                  We develop successful apps for clients ranging from startup entrepreneurs to large-scale enterprises.
                 </p>
 
                 <div className="mt-16 relative group">

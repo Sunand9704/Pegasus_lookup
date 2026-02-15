@@ -21,7 +21,7 @@ const Contact = () => {
             name: formData.name,
             contact: formData.emailOrPhone,
             description: formData.message,
-            phoneNumber: "72073 07339",
+            phoneNumber: "7207307339",
         });
     };
 
@@ -46,10 +46,10 @@ const Contact = () => {
                         className="flex flex-col justify-center"
                     >
                         <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-                            HAVE <span className="text-[#ff0044]">QUESTIONS?</span>
+                            ANY<span className="text-[#ff0044]">QUERIES?</span>
                         </h2>
                         <p className="text-white/80 text-base mb-12">
-                            Feel free to contact us and we will respond as soon as possible.
+                            Feel free to contact us and we will respond as early as possible
                         </p>
 
                         <div className="space-y-8">

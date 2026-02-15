@@ -3,14 +3,14 @@ import { useState } from "react";
 
 const founders = [
     {
-        name: "Yadala Uttej",
+        name: "Uttej Yadala",
         role: "CEO & Founder",
-        image: "/assets/photos/uttej yadala/uttej yadala_CEO & Founder of Ferret private limited.png",
+        image: "/assets/photos/uttej yadala/uttej2,3.jpeg",
     },
     {
-        name: "Yadala Surya",
+        name: "Surya Yadala",
         role: "Director & Cofounder",
-        image: "/assets/photos/surya yadala/surya yadala_Director & Cofounder of Ferret private limited.png",
+        image: "/assets/photos/surya yadala/1st person.png",
     },
 ];
 
@@ -38,15 +38,12 @@ const Management = () => {
                 {founders.map((founder, index) => (
                     <motion.div
                         key={founder.name}
-                        className="group relative h-full min-h-[500px] flex-1 overflow-hidden transition-all duration-700 ease-in-out"
+                        className={`group relative min-h-[500px] flex-1 overflow-hidden transition-all duration-700 ease-in-out md:min-h-[700px] ${
+                            index === 0 ? "md:border-r md:border-white/10" : ""
+                        }`}
                         onMouseEnter={() => setHoveredIndex(index)}
                         onMouseLeave={() => setHoveredIndex(null)}
                         style={{
-                            clipPath:
-                                index === 0
-                                    ? "polygon(0 0, 100% 0, 75% 100%, 0% 100%)"
-                                    : "polygon(25% 0, 100% 0, 100% 100%, 0% 100%)",
-                            marginLeft: index === 0 ? "0" : "-10%",
                             zIndex: hoveredIndex === index ? 10 : 1,
                         }}
                     >
@@ -56,7 +53,7 @@ const Management = () => {
                             alt={founder.name}
                             className={`h-full w-full object-cover transition-all duration-1000 grayscale ${hoveredIndex === index ? "grayscale-0 scale-105" : "grayscale opacity-40 hover:opacity-60"}`}
                             style={{
-                                objectPosition: index === 0 ? "left center" : "right center",
+                                objectPosition: index === 0 ? "left center" : "32% center",
                             }}
                         />
 
@@ -88,13 +85,6 @@ const Management = () => {
                             </motion.div>
                         </div>
 
-                        {/* Diagonal divider between panels */}
-                        {index === 0 && (
-                            <div
-                                className="absolute right-0 top-0 h-full w-[2px] bg-white/10 blur-[1px] pointer-events-none"
-                                style={{ transform: 'skewX(-15deg)', transformOrigin: 'top' }}
-                            />
-                        )}
                     </motion.div>
                 ))}
             </div>
