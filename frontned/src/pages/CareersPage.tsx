@@ -1,92 +1,57 @@
 import { motion } from "framer-motion";
-import { Briefcase, Code, Database, Users } from "lucide-react";
+import { Users, Star, GraduationCap } from "lucide-react";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
-import PageHero from "@/components/PageHero";
-
-const openings = [
-    {
-        role: "Senior Full Stack Engineer",
-        type: "Remote / Hybrid",
-        team: "Product Engineering",
-        icon: Code,
-    },
-    {
-        role: "Product Designer (UI/UX)",
-        type: "Remote",
-        team: "Design System",
-        icon: Users,
-    },
-    {
-        role: "Backend Architect",
-        type: "Remote",
-        team: "Platform Core",
-        icon: Database,
-    },
-    {
-        role: "Technical Project Manager",
-        type: "Remote",
-        team: "Delivery & Client Success",
-        icon: Briefcase,
-    },
-];
+import TwinklingStars from "@/components/TwinklingStars";
 
 const CareersPage = () => {
     return (
-        <div className="min-h-screen bg-background text-foreground">
+        <div className="min-h-screen bg-[#0a0a0c] text-white">
             <Navbar />
 
-            <PageHero
-                badge="Careers"
-                title="Build The Future"
-                highlight="With Us"
-                description="We're looking for passionate problem solvers to join our team. Work on challenging projects, learn from the best, and make an impact."
-                primaryCta={{ label: "View Openings", to: "#openings" }}
-                secondaryCta={{ label: "Learn About Us", to: "/about" }}
-            />
-
-            <section id="openings" className="section-padding">
-                <div className="mx-auto max-w-7xl">
-                    <motion.div
-                        initial={{ opacity: 0, y: 24 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5 }}
-                        viewport={{ once: true, margin: "-80px" }}
-                        className="mb-12 text-center"
-                    >
-                        <span className="text-sm font-medium uppercase tracking-wider text-primary">Open Positions</span>
-                        <h2 className="mt-3 text-3xl font-display font-bold md:text-5xl">
-                            Join Our <span className="gradient-text">Squad</span>
-                        </h2>
-                    </motion.div>
-
-                    <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                        {openings.map((job, index) => {
-                            const Icon = job.icon;
-                            return (
-                                <motion.div
-                                    key={job.role}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    transition={{ duration: 0.4, delay: index * 0.1 }}
-                                    viewport={{ once: true, margin: "-80px" }}
-                                    className="glass-card-hover group flex items-start gap-5 p-6 cursor-pointer"
-                                >
-                                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 transition-colors group-hover:bg-primary/20">
-                                        <Icon size={24} className="text-primary" />
-                                    </div>
-                                    <div>
-                                        <h3 className="text-xl font-display font-semibold group-hover:text-primary transition-colors">{job.role}</h3>
-                                        <p className="mt-1 text-sm text-muted-foreground">{job.team} • {job.type}</p>
-                                        <div className="mt-4 flex items-center text-xs font-medium uppercase tracking-wider text-primary">
-                                            Apply Now <span className="ml-2">→</span>
-                                        </div>
-                                    </div>
-                                </motion.div>
-                            );
-                        })}
-                    </div>
+            {/* Hero Section */}
+            <section className="relative min-h-screen w-full pt-[90px] overflow-hidden flex flex-col items-center">
+                {/* Background Elements */}
+                <div className="absolute inset-0 z-0">
+                    <TwinklingStars />
+                    {/* Dark gradient for space depth */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black opacity-80" />
                 </div>
+
+                {/* Hero Content */}
+                <div className="relative z-10 w-full max-w-5xl px-6 text-center mt-32">
+                    <motion.h1
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, ease: "easeOut" }}
+                        className="text-6xl md:text-8xl lg:text-[120px] font-display font-black tracking-tight leading-[0.9]"
+                    >
+                        Our Vacancies
+                    </motion.h1>
+
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 0.2 }}
+                        className="mx-auto mt-14 max-w-3xl"
+                    >
+                        <p className="text-xl md:text-2xl text-white/70 leading-relaxed font-medium">
+                            We are on a constant lookout for <span className="text-white">fresh minds</span> and <span className="text-white font-bold">bold thinkers</span>. At Ferret, we nurture the next generation of tech pioneers by providing an ecosystem where <span className="text-[#ff0044]">young talent</span> can thrive, innovate, and redefine the future.
+                        </p>
+                    </motion.div>
+                </div>
+
+
+
+                {/* Scroll Indicator */}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 1, duration: 1 }}
+                    className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center opacity-30"
+                >
+                    <div className="w-[1px] h-10 bg-gradient-to-b from-white to-transparent" />
+                </motion.div>
             </section>
 
             <Footer />

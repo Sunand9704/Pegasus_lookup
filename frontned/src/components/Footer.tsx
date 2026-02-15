@@ -28,14 +28,14 @@ const Footer = () => {
         <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
           <div className="text-white">
             <Link to="/" className="inline-flex items-center">
-              <img src="/assets/brand/ferret-logo-light.svg" alt="Ferret Technologies" className="h-[44px] w-auto" />
+              <img src="/assets/brand/ferret-logo-light.svg" alt="Ferret Technologies" className="h-[50px] w-auto" />
             </Link>
-            <p className="mt-3 text-[12px] font-extrabold uppercase tracking-[0.5px]">(c) 1999-{year} Ferret Technologies</p>
+            <p className="mt-3 text-[12px] font-extrabold uppercase tracking-[0.5px]">(c) 2025-{year} Ferret Private Limited Company</p>
             <a
-              href="mailto:hello@ferrettechnologies.com"
+              href="mailto:info@ferrettechnologies.com"
               className="mt-1.5 inline-block text-[13px] font-normal text-white/75 transition-colors hover:text-[#ff0044]"
             >
-              hello@ferrettechnologies.com
+              info@ferrettechnologies.com
             </a>
           </div>
 

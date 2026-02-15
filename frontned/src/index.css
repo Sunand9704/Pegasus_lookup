@@ -305,7 +305,7 @@
   left: -20px;
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 4px;
   height: 100%;
   flex: 0 0 auto;
   text-decoration: none;
@@ -321,6 +321,72 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: flex-start;
+}
+
+.logo__wordmark {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 52px;
+  width: max-content;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  padding: 0;
+  background: transparent;
+  box-sizing: border-box;
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.logo__wordmark-main {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  flex: 1 1 auto;
+  width: 100%;
+  padding: 0 2px;
+  text-transform: uppercase;
+  font-family: "Amasis MT", serif;
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  line-height: 0.84;
+  text-align: center;
+}
+
+.logo__wordmark-sub {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+  margin-top: 0;
+  text-transform: uppercase;
+  font-family: "TT Hoves Pro", Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 1.35px;
+  line-height: 1;
+  width: 100%;
+  padding: 0 4px;
+}
+
+.logo__wordmark--dark {
+  color: #fff;
+}
+
+.logo__wordmark--dark .logo__wordmark-sub {
+  background: #fff;
+  color: var(--red);
+}
+
+.logo__wordmark--light {
+  color: #1d1f26;
+}
+
+.logo__wordmark--light .logo__wordmark-sub {
+  background: var(--red);
+  color: #fff;
 }
 
 .logo__name {
@@ -584,11 +650,28 @@
 
   .logo {
     left: -10px;
-    gap: 10px;
+    gap: 3px;
   }
 
   .logo__img {
     height: 44px;
+  }
+
+  .logo__wordmark {
+    height: 44px;
+    width: max-content;
+    min-width: 0;
+    padding: 0;
+  }
+
+  .logo__wordmark-main {
+    font-size: 25px;
+  }
+
+  .logo__wordmark-sub {
+    height: 13px;
+    font-size: 7px;
+    letter-spacing: 1.55px;
   }
 
   .logo__name {
@@ -729,6 +812,23 @@
 @media (max-width: 767px) {
   .logo__img {
     height: 38px;
+  }
+
+  .logo__wordmark {
+    height: 38px;
+    width: max-content;
+    min-width: 0;
+    padding: 0;
+  }
+
+  .logo__wordmark-main {
+    font-size: 21px;
+  }
+
+  .logo__wordmark-sub {
+    height: 11px;
+    font-size: 6px;
+    letter-spacing: 1.35px;
   }
 
   .logo__name {
