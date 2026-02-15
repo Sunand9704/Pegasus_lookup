@@ -1,0 +1,106 @@
+import { motion } from "framer-motion";
+import { useState } from "react";
+
+const founders = [
+    {
+        name: "Uttej Yadala",
+        role: "CEO & Founder",
+        image: "/assets/photos/uttej yadala/uttej yadala_CEO & Founder of Ferret private limited.png",
+    },
+    {
+        name: "Surya Yadala",
+        role: "Director & Cofounder",
+        image: "/assets/photos/surya yadala/surya yadala_Director & Cofounder of Ferret private limited.png",
+    },
+];
+
+const Management = () => {
+    const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
+    return (
+        <section className="relative w-full bg-[#0a0a0c] overflow-hidden">
+            {/* Premium Background Elements */}
+            <div className="absolute inset-0 overflow-hidden">
+                <div className="absolute -top-[20%] -left-[10%] h-[140%] w-[120%] opacity-20"
+                    style={{
+                        background: "radial-gradient(circle at 20% 30%, #ff0044 0%, transparent 50%), radial-gradient(circle at 80% 70%, #0066ff 0%, transparent 50%)",
+                        filter: "blur(80px)"
+                    }}
+                />
+                <div className="absolute inset-0 opacity-[0.03]"
+                    style={{
+                        backgroundImage: 'linear-gradient(#ffffff 1px, transparent 1px), linear-gradient(90deg, #ffffff 1px, transparent 1px)',
+                        backgroundSize: '30px 30px'
+                    }}
+                />
+            </div>
+            <div className="relative flex min-h-[700px] w-full flex-col md:flex-row">
+                {founders.map((founder, index) => (
+                    <motion.div
+                        key={founder.name}
+                        className="group relative h-full min-h-[500px] flex-1 overflow-hidden transition-all duration-700 ease-in-out"
+                        onMouseEnter={() => setHoveredIndex(index)}
+                        onMouseLeave={() => setHoveredIndex(null)}
+                        style={{
+                            clipPath:
+                                index === 0
+                                    ? "polygon(0 0, 100% 0, 75% 100%, 0% 100%)"
+                                    : "polygon(25% 0, 100% 0, 100% 100%, 0% 100%)",
+                            marginLeft: index === 0 ? "0" : "-10%",
+                            zIndex: hoveredIndex === index ? 10 : 1,
+                        }}
+                    >
+                        {/* Full image in panel: left panel = person on left side of frame, right panel = person on right side */}
+                        <img
+                            src={founder.image}
+                            alt={founder.name}
+                            className={`h-full w-full object-cover transition-all duration-1000 grayscale ${hoveredIndex === index ? "grayscale-0 scale-105" : "grayscale opacity-40 hover:opacity-60"}`}
+                            style={{
+                                objectPosition: index === 0 ? "left center" : "right center",
+                            }}
+                        />
+
+                        {/* Gradient overlay for readability */}
+                        <div
+                            className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent transition-opacity duration-700 pointer-events-none"
+                            style={{ opacity: hoveredIndex === index ? 1 : 0.4 }}
+                        />
+
+                        {/* Name & role at bottom, visible only on hover */}
+                        <div className="absolute inset-x-0 bottom-0 flex flex-col items-center justify-end p-8 pb-12 text-center">
+                            <motion.div
+                                initial={false}
+                                animate={{
+                                    y: hoveredIndex === index ? 0 : 24,
+                                    opacity: hoveredIndex === index ? 1 : 0,
+                                }}
+                                transition={{ duration: 0.35, ease: "easeOut" }}
+                                className="flex flex-col items-center"
+                            >
+                                <h3 className="text-3xl font-display font-black text-white md:text-5xl tracking-tight">
+                                    {founder.name.split(' ')[0]}
+                                    <br />
+                                    <span className="text-[#ff0044]">{founder.name.split(' ')[1]}</span>
+                                </h3>
+                                <p className="mt-3 text-sm font-bold uppercase tracking-[4px] text-white/80 md:text-base">
+                                    {founder.role}
+                                </p>
+                                <div className="mx-auto mt-4 h-1 w-12 bg-[#ff0044]" />
+                            </motion.div>
+                        </div>
+
+                        {/* Diagonal divider between panels */}
+                        {index === 0 && (
+                            <div
+                                className="absolute right-0 top-0 h-full w-[2px] bg-white/10 blur-[1px] pointer-events-none"
+                                style={{ transform: 'skewX(-15deg)', transformOrigin: 'top' }}
+                            />
+                        )}
+                    </motion.div>
+                ))}
+            </div>
+        </section>
+    );
+};
+
+export default Management;

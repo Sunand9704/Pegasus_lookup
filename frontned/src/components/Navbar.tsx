@@ -6,7 +6,6 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 const navLinks = [
   { label: "WHAT WE DO", to: "/what-we-do" },
   { label: "PORTFOLIO", to: "/work" },
-  { label: "COMPANY", to: "/about" },
   { label: "CAREERS", to: "/careers" },
   { label: "CONTACTS", to: "/contact" },
 ];
@@ -55,12 +54,9 @@ const Navbar = () => {
             alt="Ferret Technologies"
             className="logo__img"
           />
-          <div className="logo__text">
-            <img
-              src="/assets/text logo/Text logo.png"
-              alt="Ferret Technologies"
-              className={`h-11 w-auto object-contain transition-all duration-300 ${isHomeRoute && scrolled ? "filter-none" : "brightness-200 contrast-200"}`}
-            />
+          <div className={`logo__text logo__wordmark ${isHomeRoute && scrolled ? "logo__wordmark--light" : "logo__wordmark--dark"}`}>
+            <span className="logo__wordmark-main">Ferret</span>
+            <span className="logo__wordmark-sub">Technologies</span>
           </div>
         </Link>
 
@@ -84,7 +80,7 @@ const Navbar = () => {
               <span className="button__icon">
                 <MailIcon />
               </span>
-              <span className="button__text">Request Estimate</span>
+              <span className="button__text">Lets connect</span>
             </span>
           </Link>
         </div>
@@ -119,7 +115,7 @@ const Navbar = () => {
                   <span className="button__icon">
                     <MailIcon />
                   </span>
-                  <span className="button__text">Request Estimate</span>
+                  <span className="button__text">Lets connect</span>
                 </span>
               </Link>
             </div>
