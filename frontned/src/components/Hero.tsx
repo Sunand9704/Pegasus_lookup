@@ -9,8 +9,8 @@ const awards = [
   },
   {
     icon: "/assets/achivements/2.png",
-    title: "Software development technologie",
-    subtitle: "Maintenance",
+    title: "Software development technologies",
+    // subtitle: "Maintenance",
   },
   {
     icon: "/assets/achivements/3.png",

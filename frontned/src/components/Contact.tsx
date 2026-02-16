@@ -1,11 +1,13 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import { ArrowRight } from "lucide-react";
-import { openWhatsAppChat } from "@/service/whatsapp/whatsappService";
+import { ArrowRight, Loader2 } from "lucide-react";
+import { sendEmail } from "@/services/emailService";
+import { toast } from "sonner";
 
 const Contact = () => {
     const ref = useRef(null);
     const inView = useInView(ref, { once: true });
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [formData, setFormData] = useState({
         name: "",
         emailOrPhone: "",
@@ -13,16 +15,30 @@ const Contact = () => {
         acceptPrivacy: false,
     });
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!formData.acceptPrivacy) return;
 
-        openWhatsAppChat({
-            name: formData.name,
-            contact: formData.emailOrPhone,
-            description: formData.message,
-            phoneNumber: "7207307339",
-        });
+        setIsSubmitting(true);
+        try {
+            await sendEmail({
+                name: formData.name,
+                email: formData.emailOrPhone,
+                message: formData.message,
+            });
+            toast.success("Message sent successfully! We'll get back to you soon.");
+            setFormData({
+                name: "",
+                emailOrPhone: "",
+                message: "",
+                acceptPrivacy: false,
+            });
+        } catch (error) {
+            toast.error("Failed to send message. Please try again later.");
+            console.error(error);
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -46,7 +62,7 @@ const Contact = () => {
                         className="flex flex-col justify-center"
                     >
                         <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-                            ANY<span className="text-[#ff0044]">QUERIES?</span>
+                            ANY<span className="text-[#ff0044]"> QUERIES?</span>
                         </h2>
                         <p className="text-white/80 text-base mb-12">
                             Feel free to contact us and we will respond as early as possible
@@ -61,7 +77,7 @@ const Contact = () => {
                                     href="mailto:info@ferrettechnologies.com"
                                     className="text-white text-2xl md:text-3xl font-bold hover:text-[#ff0044] transition-colors"
                                 >
-                                    +1 415 770 2434
+                                    +12147443666
                                 </a>
                             </div>
                         </div>
@@ -141,13 +157,20 @@ const Contact = () => {
                         {/* Submit button */}
                         <button
                             type="submit"
-                            disabled={!formData.acceptPrivacy}
-                            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-[#ff0044] text-white font-medium text-sm hover:bg-[#e6003d] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                            disabled={!formData.acceptPrivacy || isSubmitting}
+                            className="inline-flex w-full md:w-auto items-center justify-center gap-2 px-8 py-4 rounded-full bg-[#ff0044] text-white font-bold text-base hover:bg-[#ff1a57] transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_8px_20px_rgba(255,0,68,0.3)]"
                         >
-                            <>
-                                Next
-                                <ArrowRight size={18} />
-                            </>
+                            {isSubmitting ? (
+                                <>
+                                    Sending...
+                                    <Loader2 size={18} className="animate-spin" />
+                                </>
+                            ) : (
+                                <>
+                                    Next
+                                    <ArrowRight size={18} />
+                                </>
+                            )}
                         </button>
                     </motion.form>
                 </div>
