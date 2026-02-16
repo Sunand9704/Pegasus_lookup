@@ -1,5 +1,6 @@
 const TwinklingStars = () => {
-    const stars = Array.from({ length: 180 }).map((_, i) => {
+    const starsCount = typeof window !== 'undefined' && window.innerWidth < 768 ? 60 : 180;
+    const stars = Array.from({ length: starsCount }).map((_, i) => {
         const isBig = Math.random() < 0.08; // 8% big stars
         return {
             id: i,

@@ -87,7 +87,7 @@ const Navbar = () => {
               <span className="button__icon">
                 <MailIcon />
               </span>
-              <span className="button__text">Lets connect</span>
+              <span className="button__text">Let's Connect</span>
             </span>
           </Link>
         </div>
@@ -100,10 +100,10 @@ const Navbar = () => {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="mobile-menu"
+            initial={{ opacity: 0, y: -20, height: 0 }}
+            animate={{ opacity: 1, y: 0, height: "auto" }}
+            exit={{ opacity: 0, y: -20, height: 0 }}
+            className="mobile-menu border-b border-white/10 bg-[#0c0d20]/95 backdrop-blur-xl"
           >
             <div className="mobile-menu__inner">
               {navLinks.map((link) => (

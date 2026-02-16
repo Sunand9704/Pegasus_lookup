@@ -24,16 +24,16 @@ const Footer = () => {
     <footer className="relative overflow-hidden border-t border-white/10 bg-[linear-gradient(90deg,#141827_0%,#1A1E31_50%,#141827_100%)]">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_10%,rgba(255,255,255,0.04),transparent_36%),radial-gradient(circle_at_80%_80%,rgba(255,255,255,0.025),transparent_42%)]" />
 
-      <div className="relative mx-auto w-[min(1150px,calc(100vw-34px))] py-12 md:py-14">
-        <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
-          <div className="text-white">
+      <div className="relative mx-auto w-[min(1150px,calc(100vw-34px))] py-16 md:py-20 text-center md:text-left">
+        <div className="flex flex-col gap-12 md:flex-row md:items-center md:justify-between items-center text-center md:items-start md:text-left">
+          <div className="text-white flex flex-col items-center md:items-start">
             <Link to="/" className="inline-flex items-center">
-              <img src="/assets/brand/ferret-logo-light.svg" alt="Ferret Technologies" className="h-[50px] w-auto" />
+              <img src="/assets/brand/ferret-logo-light.svg" alt="Ferret Technologies" className="h-[60px] w-auto" />
             </Link>
-            <p className="mt-3 text-[12px] font-extrabold uppercase tracking-[0.5px]">(c) 2025-{year} Ferret private limited (company)</p>
+            <p className="mt-6 text-[13px] font-bold uppercase tracking-[1px] opacity-80">(c) 2025-{year} Ferret private limited</p>
             <a
               href="mailto:info@ferrettechnologies.com"
-              className="mt-1.5 inline-block text-[13px] font-normal text-white/75 transition-colors hover:text-[#ff0044]"
+              className="mt-3 inline-block text-[14px] font-medium text-white/90 transition-colors hover:text-[#ff0044]"
             >
               info@ferrettechnologies.com
             </a>
@@ -47,42 +47,42 @@ const Footer = () => {
                 target="_blank"
                 rel="noreferrer"
                 aria-label={label}
-                className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-white/75 p-3 text-white/70 transition-opacity hover:opacity-100"
+                className="flex h-12 w-12 items-center justify-center rounded-full bg-[#252838] border border-white/10 text-white/80 transition-all hover:bg-[#ff0044] hover:text-white hover:scale-110"
               >
-                <Icon size={21} strokeWidth={2} />
+                <Icon size={20} strokeWidth={2} />
               </a>
             ))}
           </div>
 
-          <div className="flex items-center gap-10">
+          <div className="flex items-center gap-8 md:gap-10">
             <Link
               to="/contact"
-              className="text-[12px] font-bold uppercase tracking-[0.84px] text-white/60 transition-opacity hover:opacity-100"
+              className="text-[13px] font-bold uppercase tracking-[1px] text-white/70 hover:text-white transition-colors"
             >
               Support
             </Link>
             <Link
               to="/contact"
-              className="text-[12px] font-bold uppercase tracking-[0.84px] text-white/60 transition-opacity hover:opacity-100"
+              className="text-[13px] font-bold uppercase tracking-[1px] text-white/70 hover:text-white transition-colors"
             >
               Customer Login
             </Link>
           </div>
         </div>
 
-        <div className="mt-10 flex flex-wrap items-center justify-between gap-x-5 gap-y-4">
+        <div className="mt-16 grid grid-cols-2 gap-y-10 items-center justify-items-center md:flex md:flex-wrap md:justify-between md:gap-x-5 md:gap-y-4">
           {footerBadges.map((badge) => (
-            <div key={badge.title} className="opacity-45 transition-opacity hover:opacity-70">
+            <div key={badge.title} className="opacity-60 transition-opacity hover:opacity-100">
               {badge.variant === "pill" ? (
-                <div className="inline-flex flex-col items-center rounded-full border border-white/35 px-4 py-1.5 text-white/80">
-                  <span className="text-[16px] font-semibold leading-none">{badge.title}</span>
-                  <span className="mt-0.5 text-[9px] font-semibold uppercase tracking-[0.55px]">{badge.subtitle}</span>
+                <div className="inline-flex flex-col items-center rounded-full border border-white/20 bg-white/5 px-5 py-2 text-white/90">
+                  <span className="text-[15px] font-bold leading-none">{badge.title}</span>
+                  <span className="mt-1 text-[8px] font-bold uppercase tracking-[1px] opacity-70">{badge.subtitle}</span>
                 </div>
               ) : (
-                <div className="min-w-[140px] text-white/80">
-                  <p className="text-[16px] font-semibold leading-none tracking-[0.18px]">{badge.title}</p>
+                <div className="text-center md:text-left md:min-w-[140px] text-white/90">
+                  <p className="text-[15px] font-bold leading-none tracking-[0.2px]">{badge.title}</p>
                   {badge.subtitle ? (
-                    <p className="mt-0.5 text-[10px] font-medium uppercase tracking-[0.5px] text-white/70">{badge.subtitle}</p>
+                    <p className="mt-1 text-[9px] font-bold uppercase tracking-[0.8px] opacity-60">{badge.subtitle}</p>
                   ) : null}
                 </div>
               )}

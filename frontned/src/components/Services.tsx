@@ -2,8 +2,9 @@ import { AnimatePresence, motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import type { LucideIcon } from "lucide-react";
-import { ArrowRight, Brain, ChevronLeft, ChevronRight, Cpu, Globe, Monitor, Smartphone, UsersRound } from "lucide-react";
-import { openWhatsAppChat } from "@/service/whatsapp/whatsappService";
+import { ArrowRight, Brain, ChevronLeft, ChevronRight, Cpu, Globe, Loader2, Monitor, Smartphone, UsersRound } from "lucide-react";
+import { sendEmail } from "@/services/emailService";
+import { toast } from "sonner";
 
 interface ServiceItem {
   icon: LucideIcon;
@@ -88,7 +89,7 @@ const technologySlides: TechnologySlide[] = [
     panelGradient: "linear-gradient(125deg, #B054FF 0%, #733CDB 100%)",
   },
   {
-    id: "software-technologies-devlopment",
+    id: "software-technologies-Development",
     title: "Software technologies devlopment",
     description:
       "We deliver end-to-end software development across planning, architecture, implementation, QA, and release cycles to ship dependable digital products.",
@@ -96,7 +97,7 @@ const technologySlides: TechnologySlide[] = [
     panelGradient: "linear-gradient(125deg, #4ADACA 0%, #24B4A7 100%)",
   },
   {
-    id: "web-technologies",
+    id: "Web-technologies",
     title: "web Technologies",
     description:
       "We craft responsive, high-performance web platforms using modern frontend and backend stacks, with focus on UX, scalability, and maintainability.",
@@ -117,7 +118,7 @@ const ServiceCircle = ({ service, index }: { service: ServiceItem; index: number
       initial={{ opacity: 0, y: 32 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay: index * 0.08 }}
-      className="flex flex-col items-center text-center group cursor-pointer"
+      className="flex w-full items-center gap-6 px-4 group cursor-pointer md:flex-col md:text-center md:px-0"
       onClick={() => navigate(`/services/${service.slug}`)}
     >
       <div className="relative">
@@ -129,7 +130,7 @@ const ServiceCircle = ({ service, index }: { service: ServiceItem; index: number
             scale: 1.1,
             boxShadow: "0 25px 50px rgba(255, 255, 255, 0.15)",
           }}
-          className="relative flex h-[160px] w-[160px] items-center justify-center rounded-full md:h-[176px] md:w-[176px] transition-all duration-500 overflow-visible"
+          className="relative flex h-[80px] w-[80px] items-center justify-center rounded-full md:h-[176px] md:w-[176px] transition-all duration-500 overflow-visible"
           style={{ background: service.gradient }}
         >
           {/* Animated Background Pulse */}
@@ -169,15 +170,14 @@ const ServiceCircle = ({ service, index }: { service: ServiceItem; index: number
               delay: index * 0.5
             }}
           >
-            <Icon size={84} className="relative z-[1] text-white" strokeWidth={1.5} />
+            <Icon size={40} className="relative z-[1] text-white md:hidden" strokeWidth={1.5} />
+            <Icon size={84} className="relative z-[1] text-white hidden md:block" strokeWidth={1.5} />
           </motion.div>
         </motion.div>
       </div>
 
-      <h3 className="mt-8 text-[19px] font-display font-bold leading-[1.1] text-white md:text-[21px] transition-transform duration-300 group-hover:translate-y-1">
-        {service.title[0]}
-        <br />
-        {service.title[1]}
+      <h3 className="text-left text-[20px] font-display font-bold leading-[1.1] text-white md:text-center md:mt-8 md:text-[21px] transition-transform duration-300 group-hover:translate-y-1 whitespace-nowrap md:whitespace-normal">
+        {service.title[0]} {service.title[1]}
       </h3>
     </motion.li>
   );
@@ -205,14 +205,21 @@ const TechnologyShowcase = () => {
         <div className="relative min-h-[560px] md:min-h-[620px]">
           <div className="absolute inset-0 bg-[linear-gradient(120deg,#1A1F30_0%,#151A29_100%)]" />
           <div
-            className="absolute inset-0"
+            className="absolute inset-0 block md:hidden"
+            style={{
+              background: activeSlide.panelGradient,
+              opacity: 0.15,
+            }}
+          />
+          <div
+            className="absolute inset-0 hidden md:block"
             style={{
               clipPath: "polygon(24% 0, 100% 0, 78% 100%, 0 100%)",
               background: activeSlide.panelGradient,
             }}
           />
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(12,16,27,0.62)_0%,rgba(12,16,27,0.26)_26%,rgba(12,16,27,0)_42%)]" />
-          <div className="absolute inset-0 bg-[linear-gradient(270deg,rgba(12,16,27,0.58)_0%,rgba(12,16,27,0.22)_26%,rgba(12,16,27,0)_44%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(12,16,27,0.85)_0%,rgba(12,16,27,0.4)_50%,rgba(12,16,27,0.85)_100%)] md:bg-[linear-gradient(90deg,rgba(12,16,27,0.62)_0%,rgba(12,16,27,0.26)_26%,rgba(12,16,27,0)_42%)]" />
+          <div className="absolute inset-0 hidden md:block bg-[linear-gradient(270deg,rgba(12,16,27,0.58)_0%,rgba(12,16,27,0.22)_26%,rgba(12,16,27,0)_44%)]" />
 
           <AnimatePresence mode="wait">
             <motion.div
@@ -221,7 +228,7 @@ const TechnologyShowcase = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -14 }}
               transition={{ duration: 0.32, ease: "easeOut" }}
-              className="relative z-[2] grid min-h-[560px] grid-cols-1 items-center gap-6 px-7 py-14 md:min-h-[620px] md:grid-cols-[1.05fr_1fr] md:gap-10 md:px-16"
+              className="relative z-[2] grid min-h-[560px] grid-cols-1 items-center gap-8 px-5 py-20 md:min-h-[620px] md:grid-cols-[1.05fr_1fr] md:gap-10 md:px-16"
             >
               <div className="flex items-center justify-center md:justify-start">
                 <img
@@ -249,18 +256,18 @@ const TechnologyShowcase = () => {
             type="button"
             onClick={showPrevious}
             aria-label="Previous technology"
-            className="absolute left-4 top-1/2 z-[3] flex h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-white/10 text-white backdrop-blur-sm transition-colors hover:bg-white/20 md:left-8"
+            className="absolute left-2 top-1/2 z-[3] flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-white/10 text-white backdrop-blur-sm transition-colors hover:bg-white/20 md:left-8 md:h-14 md:w-14"
           >
-            <ChevronLeft size={36} strokeWidth={2.1} />
+            <ChevronLeft className="h-6 w-6 md:h-9 md:w-9" strokeWidth={2.1} />
           </button>
 
           <button
             type="button"
             onClick={showNext}
             aria-label="Next technology"
-            className="absolute right-4 top-1/2 z-[3] flex h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-white/10 text-white backdrop-blur-sm transition-colors hover:bg-white/20 md:right-8"
+            className="absolute right-2 top-1/2 z-[3] flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-white/10 text-white backdrop-blur-sm transition-colors hover:bg-white/20 md:right-8 md:h-14 md:w-14"
           >
-            <ChevronRight size={36} strokeWidth={2.1} />
+            <ChevronRight className="h-6 w-6 md:h-9 md:w-9" strokeWidth={2.1} />
           </button>
         </div>
 
@@ -282,10 +289,11 @@ const TechnologyShowcase = () => {
 
 const InquiryContactPanel = () => {
   const [isConsentGiven, setIsConsentGiven] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const panelRef = useRef(null);
   const panelInView = useInView(panelRef, { once: true, margin: "-80px" });
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!isConsentGiven) return;
 
@@ -294,12 +302,22 @@ const InquiryContactPanel = () => {
     const contact = String(formData.get("contact") ?? "").trim();
     const description = String(formData.get("description") ?? "").trim();
 
-    openWhatsAppChat({
-      name,
-      contact,
-      description,
-      phoneNumber: "14157702434",
-    });
+    setIsSubmitting(true);
+    try {
+      await sendEmail({
+        name: name,
+        email: contact,
+        message: description,
+      });
+      toast.success("Message sent successfully!");
+      event.currentTarget.reset();
+      setIsConsentGiven(false);
+    } catch (error) {
+      toast.error("Failed to send message.");
+      console.error(error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -308,12 +326,12 @@ const InquiryContactPanel = () => {
       initial={{ opacity: 0, y: 34 }}
       animate={panelInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.55, ease: "easeOut" }}
-      className="relative mx-auto mt-20 w-[min(92vw,1540px)] overflow-hidden border border-white/10 bg-[linear-gradient(90deg,#121723_0%,#141A27_50%,#121723_100%)]"
+      className="relative mx-auto mt-20 w-[min(94vw,1540px)] overflow-hidden border border-white/10 bg-[linear-gradient(90deg,#121723_0%,#141A27_50%,#121723_100%)] rounded-2xl md:rounded-none"
       style={{ fontFamily: '"TT Hoves Pro", Arial, "Helvetica Neue", Helvetica, sans-serif' }}
     >
       <div className="relative z-[1] grid grid-cols-1 md:grid-cols-[0.4fr_0.6fr]">
         <div className="border-b border-white/10 px-8 py-11 md:border-b-0 md:border-r md:px-[68px] md:py-[68px]">
-          <h3 className="text-[40px] font-display font-black uppercase leading-[1.02] tracking-[1.1px] text-[#ff0044] md:text-[50px] md:whitespace-nowrap">
+          <h3 className="text-[32px] font-display font-black uppercase leading-[1.1] tracking-[0.5px] text-[#ff0044] md:text-[50px] md:tracking-[1.1px] md:whitespace-nowrap">
             Have Questions?
           </h3>
           <p className="mt-6 max-w-[430px] text-[18px] leading-[1.45] text-white/92 md:text-[20px] md:leading-[1.38]">
@@ -327,7 +345,7 @@ const InquiryContactPanel = () => {
             >
               info@ferrettechnologies.com
             </a>
-            <a href="tel:+14157702434" className="w-fit text-[32px] font-display font-extrabold tracking-[0.9px] text-white md:text-[36px] md:leading-none">
+            <a href="tel:+14157702434" className="w-fit text-[28px] font-display font-extrabold tracking-[0.5px] text-white md:text-[36px] md:tracking-[0.9px] md:leading-none">
               +1 415 770 2434
             </a>
           </div>
@@ -391,11 +409,20 @@ const InquiryContactPanel = () => {
 
           <button
             type="submit"
-            disabled={!isConsentGiven}
+            disabled={!isConsentGiven || isSubmitting}
             className="mt-9 inline-flex h-12 min-w-[178px] items-center justify-center gap-2 rounded-full bg-[#ff0044] px-8 text-[15px] font-semibold text-white transition-all hover:bg-[#ed164e] disabled:cursor-not-allowed disabled:opacity-55"
           >
-            Next
-            <ArrowRight size={18} />
+            {isSubmitting ? (
+              <>
+                Sending...
+                <Loader2 size={18} className="animate-spin" />
+              </>
+            ) : (
+              <>
+                Next
+                <ArrowRight size={18} />
+              </>
+            )}
           </button>
         </form>
       </div>
@@ -429,7 +456,7 @@ const Services = () => {
           </p>
         </motion.div>
 
-        <ul className="grid grid-cols-1 justify-items-center gap-y-14 sm:grid-cols-2 lg:grid-cols-5">
+        <ul className="mx-auto flex max-w-md flex-col gap-y-8 md:max-w-none md:grid md:grid-cols-5 md:justify-items-center md:gap-y-14">
           {services.map((service, index) => (
             <ServiceCircle key={service.title.join("-")} service={service} index={index} />
           ))}
