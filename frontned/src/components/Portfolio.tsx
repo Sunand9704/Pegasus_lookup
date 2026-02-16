@@ -41,6 +41,48 @@ const projects = [
   },
 ];
 
+interface Project {
+  title: string;
+  description: string;
+  tech: string[];
+  color: string;
+}
+
+const ProjectCard = ({ project, index }: { project: Project; index: number }) => {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-50px" });
+  return (
+    <motion.div
+      key={project.title}
+      ref={ref}
+      initial={{ opacity: 0, y: 40 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      className="glass-card-hover overflow-hidden group cursor-pointer"
+    >
+      <div className={`h-48 bg-gradient-to-br ${project.color} flex items-center justify-center`}>
+        <span className="text-5xl font-display font-bold text-foreground/10 group-hover:text-foreground/20 transition-colors">
+          {project.title.charAt(0)}
+        </span>
+      </div>
+      <div className="p-6">
+        <div className="flex items-center justify-between mb-3">
+          <h3 className="text-lg font-display font-semibold">{project.title}</h3>
+          <ExternalLink size={18} className="text-muted-foreground group-hover:text-primary transition-colors" />
+        </div>
+        <p className="text-sm text-muted-foreground mb-4">{project.description}</p>
+        <div className="flex flex-wrap gap-2">
+          {project.tech.map((t: string) => (
+            <span key={t} className="px-3 py-1 text-xs rounded-full bg-muted text-muted-foreground">
+              {t}
+            </span>
+          ))}
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
 const Portfolio = () => {
   const headingRef = useRef(null);
   const headingInView = useInView(headingRef, { once: true });
@@ -65,40 +107,9 @@ const Portfolio = () => {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {projects.map((project, i) => {
-            const ref = useRef(null);
-            const inView = useInView(ref, { once: true, margin: "-50px" });
-            return (
-              <motion.div
-                key={project.title}
-                ref={ref}
-                initial={{ opacity: 0, y: 40 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="glass-card-hover overflow-hidden group cursor-pointer"
-              >
-                <div className={`h-48 bg-gradient-to-br ${project.color} flex items-center justify-center`}>
-                  <span className="text-5xl font-display font-bold text-foreground/10 group-hover:text-foreground/20 transition-colors">
-                    {project.title.charAt(0)}
-                  </span>
-                </div>
-                <div className="p-6">
-                  <div className="flex items-center justify-between mb-3">
-                    <h3 className="text-lg font-display font-semibold">{project.title}</h3>
-                    <ExternalLink size={18} className="text-muted-foreground group-hover:text-primary transition-colors" />
-                  </div>
-                  <p className="text-sm text-muted-foreground mb-4">{project.description}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {project.tech.map((t) => (
-                      <span key={t} className="px-3 py-1 text-xs rounded-full bg-muted text-muted-foreground">
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-            );
-          })}
+          {projects.map((project, i) => (
+            <ProjectCard key={project.title} project={project} index={i} />
+          ))}
         </div>
       </div>
     </section>

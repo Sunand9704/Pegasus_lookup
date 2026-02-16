@@ -5,7 +5,6 @@ import type { LucideIcon } from "lucide-react";
 import { ArrowRight, Brain, ChevronLeft, ChevronRight, Cpu, Globe, Loader2, Monitor, Smartphone, UsersRound } from "lucide-react";
 import { sendEmail } from "@/services/emailService";
 import { toast } from "sonner";
-
 interface ServiceItem {
   icon: LucideIcon;
   title: string[];
@@ -13,7 +12,6 @@ interface ServiceItem {
   glow: string;
   slug: string;
 }
-
 interface TechnologySlide {
   id: string;
   title: string;
@@ -90,7 +88,7 @@ const technologySlides: TechnologySlide[] = [
   },
   {
     id: "software-technologies-Development",
-    title: "Software technologies devlopment",
+    title: "Software Technologies Devlopment",
     description:
       "We deliver end-to-end software development across planning, architecture, implementation, QA, and release cycles to ship dependable digital products.",
     image: techHighlightImage("software-technologies-development.png"),
@@ -98,7 +96,7 @@ const technologySlides: TechnologySlide[] = [
   },
   {
     id: "Web-technologies",
-    title: "web Technologies",
+    title: "Web Technologies",
     description:
       "We craft responsive, high-performance web platforms using modern frontend and backend stacks, with focus on UX, scalability, and maintainability.",
     image: techHighlightImage("web-technologies.png"),
