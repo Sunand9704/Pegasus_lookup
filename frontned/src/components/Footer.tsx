@@ -9,12 +9,12 @@ const socialLinks = [
 ];
 
 const footerBadges = [
-  { title: "GoodFirms", subtitle: "Top Mobile App Developers", variant: "text" },
-  { title: "Top Wearable App", subtitle: "Creators 2018", variant: "text" },
-  { title: "Find Best", subtitle: "Web Dev 2019/2020", variant: "text" },
-  { title: "UpCity", subtitle: "Top Local Agency", variant: "text" },
+  { title: "Top Quality", subtitle: "Top Software Developers", variant: "pill" },
+  // { title: "Top Wearable App", subtitle: "Creators 2018", variant: "text" },
+  { title: "Discover The Best", subtitle: "Software Development", variant: "pill" },
+  // { title: "UpCity", subtitle: "Top Local Agency", variant: "text" },
   { title: "Top Developers", subtitle: "Top Mobile App Developer", variant: "pill" },
-  { title: "appfutura", subtitle: "", variant: "text" },
+  // { title: "appfutura", subtitle: "", variant: "text" },
 ];
 
 const Footer = () => {
@@ -35,7 +35,7 @@ const Footer = () => {
               href="mailto:info@ferrettechnologies.com"
               className="mt-3 inline-block text-[14px] font-medium text-white/90 transition-colors hover:text-[#ff0044]"
             >
-              info@ferrettechnologies.com
+              info@ferrettechnologies.
             </a>
           </div>
 

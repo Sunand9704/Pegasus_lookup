@@ -32,8 +32,8 @@ const Hero = () => {
       <div className="hero__content">
         <div className="hero__intro">
           <h1 className="hero__title">
-            <span>ADVANCING NEXT </span>
-            <span className="hero__title-accent">GENERATION.</span>
+            <span className="whitespace-nowrap">ADVANCING NEXT GENERALLY</span>
+            <span className="hero__title-accent">GLOBALLY.</span>
           </h1>
 
           <p className="hero__proof">Experienced software developers delivering innovative software and Android applications recognized worldwide.</p>
