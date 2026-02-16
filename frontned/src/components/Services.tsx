@@ -90,7 +90,7 @@ const technologySlides: TechnologySlide[] = [
   },
   {
     id: "software-technologies-Development",
-    title: "Software technologies devlopment",
+    title: "Software technologies Development",
     description:
       "We deliver end-to-end software development across planning, architecture, implementation, QA, and release cycles to ship dependable digital products.",
     image: techHighlightImage("software-technologies-development.png"),
@@ -98,7 +98,7 @@ const technologySlides: TechnologySlide[] = [
   },
   {
     id: "Web-technologies",
-    title: "web Technologies",
+    title: "Web Technologies",
     description:
       "We craft responsive, high-performance web platforms using modern frontend and backend stacks, with focus on UX, scalability, and maintainability.",
     image: techHighlightImage("web-technologies.png"),
