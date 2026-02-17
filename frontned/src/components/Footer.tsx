@@ -35,7 +35,7 @@ const Footer = () => {
               href="mailto:info@ferrettechnologies.com"
               className="mt-3 inline-block text-[14px] font-medium text-white/90 transition-colors hover:text-[#ff0044]"
             >
-              info@ferrettechnologies.
+              info@ferrettechnologies.com
             </a>
           </div>
 
