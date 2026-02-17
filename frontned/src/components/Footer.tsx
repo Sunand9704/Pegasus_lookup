@@ -24,7 +24,7 @@ const Footer = () => {
     <footer className="relative overflow-hidden border-t border-white/10 bg-[linear-gradient(90deg,#141827_0%,#1A1E31_50%,#141827_100%)]">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_10%,rgba(255,255,255,0.04),transparent_36%),radial-gradient(circle_at_80%_80%,rgba(255,255,255,0.025),transparent_42%)]" />
 
-      <div className="relative mx-auto w-[min(1150px,calc(100vw-34px))] py-16 md:py-20 text-center md:text-left">
+      <div className="relative mx-auto w-[min(1150px,calc(100%-34px))] py-16 md:py-20 text-center md:text-left">
         <div className="flex flex-col gap-12 md:flex-row md:items-center md:justify-between items-center text-center md:items-start md:text-left">
           <div className="text-white flex flex-col items-center md:items-start">
             <Link to="/" className="inline-flex items-center">

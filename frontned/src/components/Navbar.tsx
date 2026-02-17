@@ -9,6 +9,7 @@ const navLinks = [
   { label: "CAREERS", to: "/careers" },
   { label: "CONTACTS", to: "/contact" },
 ];
+const logoMainLetters = "FERRET".split("");
 const logoSubLetters = "TECHNOLOGIES".split("");
 
 const MailIcon = () => (
@@ -56,7 +57,17 @@ const Navbar = () => {
             className="logo__img"
           />
           <div className={`logo__text logo__wordmark ${isLightNavbar ? "logo__wordmark--light" : "logo__wordmark--dark"}`}>
-            <span className="logo__wordmark-main">Ferret</span>
+            <span className="logo__wordmark-main" aria-label="Ferret">
+              {logoMainLetters.map((letter, index) => (
+                <span
+                  key={`${letter}-${index}`}
+                  className={`logo__wordmark-main-letter${index === 2 ? " logo__wordmark-main-letter--gap-rr" : ""}${index === 3 ? " logo__wordmark-main-letter--gap-re" : ""}`}
+                  aria-hidden="true"
+                >
+                  {letter}
+                </span>
+              ))}
+            </span>
             <span className="logo__wordmark-sub" aria-label="Technologies">
               {logoSubLetters.map((letter, index) => (
                 <span key={`${letter}-${index}`} className="logo__wordmark-sub-letter" aria-hidden="true">
