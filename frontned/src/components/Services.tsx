@@ -206,7 +206,7 @@ const TechnologyShowcase = () => {
             className="absolute inset-0 block md:hidden"
             style={{
               background: activeSlide.panelGradient,
-              opacity: 0.15,
+              opacity: 0.82,
             }}
           />
           <div
@@ -216,7 +216,7 @@ const TechnologyShowcase = () => {
               background: activeSlide.panelGradient,
             }}
           />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(12,16,27,0.85)_0%,rgba(12,16,27,0.4)_50%,rgba(12,16,27,0.85)_100%)] md:bg-[linear-gradient(90deg,rgba(12,16,27,0.62)_0%,rgba(12,16,27,0.26)_26%,rgba(12,16,27,0)_42%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(12,16,27,0.22)_0%,rgba(12,16,27,0.08)_50%,rgba(12,16,27,0.22)_100%)] md:bg-[linear-gradient(90deg,rgba(12,16,27,0.62)_0%,rgba(12,16,27,0.26)_26%,rgba(12,16,27,0)_42%)]" />
           <div className="absolute inset-0 hidden md:block bg-[linear-gradient(270deg,rgba(12,16,27,0.58)_0%,rgba(12,16,27,0.22)_26%,rgba(12,16,27,0)_44%)]" />
 
           <AnimatePresence mode="wait">

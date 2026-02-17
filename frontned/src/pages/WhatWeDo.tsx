@@ -363,7 +363,7 @@ const BubbleCluster = () => {
     return (
         <section className="relative min-h-[550px] md:min-h-[650px] overflow-hidden pt-8 pb-20 z-10">
             <div className="relative w-full flex items-center justify-center">
-                <div className="relative h-[550px] md:h-[650px] w-full" style={{ maxWidth: "100vw" }}>
+                <div className="relative h-[550px] md:h-[650px] w-full" style={{ maxWidth: "100%" }}>
                     {sorted.map((bubble) => {
                         const labelNode = renderLabel(bubble);
                         const illustrationNode = renderIllustration(bubble);

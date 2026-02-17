@@ -206,13 +206,13 @@ const ServiceDetails = () => {
     const Icon = service.icon;
 
     return (
-        <div className="min-h-screen bg-[#0c0d16] text-white">
+        <div className="min-h-screen overflow-x-hidden bg-[#0c0d16] text-white">
             <Navbar />
 
             <main className="pt-32 pb-20 px-4 md:px-8 max-w-7xl mx-auto">
                 <Link to="/what-we-do" className="inline-flex items-center gap-2 text-white/60 hover:text-[#ff0044] transition-colors mb-12">
                     <ArrowLeft size={20} />
-                    <span>Back to What We Do</span>
+                    <span>Back</span>
                 </Link>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
@@ -228,7 +228,7 @@ const ServiceDetails = () => {
                             <Icon size={40} className="text-white" />
                         </div>
 
-                        <h1 className="text-5xl md:text-7xl font-display font-black uppercase mb-8 leading-tight">
+                        <h1 className="mb-8 break-words text-4xl font-display font-black uppercase leading-[0.95] sm:text-5xl md:text-7xl">
                             {service.title}
                         </h1>
 

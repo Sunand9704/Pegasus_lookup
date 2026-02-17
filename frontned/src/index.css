@@ -79,6 +79,14 @@
   }
 }
 
+html,
+body,
+#root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 @layer components {
   .glass-card {
     @apply bg-card/60 backdrop-blur-xl border border-glass-border rounded-2xl;
@@ -256,7 +264,7 @@
 }
 
 .header__inner {
-  width: min(1150px, calc(100vw - 38px));
+  width: min(1150px, calc(100% - 38px));
   margin: 0 auto;
   display: flex;
   align-items: stretch;
@@ -320,9 +328,24 @@
   font-family: "Amasis MT Md", "Amasis MT", "Times New Roman", serif;
   font-size: 38px;
   font-weight: 500;
-  letter-spacing: -0.5px;
+  letter-spacing: 1.1px;
+  font-kerning: none;
+  font-feature-settings: "kern" 0;
   line-height: 1;
   text-align: left;
+}
+
+.logo__wordmark-main-letter {
+  display: inline-block;
+  line-height: 1;
+}
+
+.logo__wordmark-main-letter--gap-rr {
+  margin-right: 0.06em;
+}
+
+.logo__wordmark-main-letter--gap-re {
+  margin-right: 0.05em;
 }
 
 .logo__wordmark-sub {
@@ -355,8 +378,8 @@
 }
 
 .logo__wordmark--dark .logo__wordmark-sub {
-  background: transparent;
-  color: var(--red);
+  background: #f11c22;
+  color: #fff;
 }
 
 .logo__wordmark--light {
@@ -364,7 +387,7 @@
 }
 
 .logo__wordmark--light .logo__wordmark-sub {
-  background: var(--red);
+  background: #f11c22;
   color: #fff;
 }
 
@@ -478,7 +501,7 @@
 
 
 .hero__content {
-  width: min(1150px, calc(100vw - 26px));
+  width: min(1150px, calc(100% - 26px));
   margin: 0 auto;
   min-height: 100vh;
   padding: 0 0.7em;
@@ -640,7 +663,7 @@
 
   .header__inner {
     height: 58px;
-    width: min(94vw, 980px);
+    width: min(calc(100% - 12px), 980px);
     align-items: center;
   }
 
@@ -658,16 +681,16 @@
   }
 
   .logo {
-    left: -10px;
-    gap: 3px;
+    left: 0;
+    gap: 2px;
   }
 
   .logo__img {
-    height: 44px;
+    height: 38px;
   }
 
   .logo__wordmark {
-    height: 44px;
+    height: 40px;
     width: max-content;
     min-width: 0;
     padding: 0;
@@ -675,17 +698,19 @@
   }
 
   .logo__wordmark-main {
-    height: 32px;
-    flex: 0 0 32px;
+    height: 31px;
+    flex: 0 0 31px;
     font-size: 27px;
+    letter-spacing: 1.3px;
   }
 
   .logo__wordmark-sub {
-    height: 13px;
-    flex: 0 0 13px;
-    font-size: 7px;
+    height: 12px;
+    flex: 0 0 12px;
+    font-size: 9.5px;
     letter-spacing: 0;
-    padding: 1px 4px 0;
+    padding: 0 3px;
+    transform: translateY(-1px);
   }
 
   .logo__name {
@@ -831,7 +856,7 @@
 
 @media (max-width: 767px) {
   .logo__img {
-    height: 38px;
+    height: 34px;
   }
 
   .logo__wordmark {
@@ -839,20 +864,23 @@
     width: max-content;
     min-width: 0;
     padding: 0;
+    transform: translateY(-3px);
   }
 
   .logo__wordmark-main {
     height: 29px;
     flex: 0 0 29px;
-    font-size: 23px;
+    font-size: 25px;
+    letter-spacing: 1.5px;
   }
 
   .logo__wordmark-sub {
-    height: 10px;
-    flex: 0 0 10px;
-    font-size: 6px;
+    height: 11px;
+    flex: 0 0 11px;
+    font-size: 8.5px;
     letter-spacing: 0;
-    padding: 1px 3px 0;
+    padding: 0 2px;
+    transform: translateY(-1px);
   }
 
   .logo__name {
@@ -893,15 +921,17 @@
   }
 
   .achievements {
-    justify-content: center;
-    gap: 24px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 26px;
     margin-top: 40px;
     margin-bottom: 60px;
   }
 
   .achievements__item {
-    width: 130px;
-    padding: 10px 0;
+    width: min(250px, 92%);
+    padding: 8px 0;
   }
 
   .achievements__icon-wrap {
