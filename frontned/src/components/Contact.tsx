@@ -73,12 +73,12 @@ const Contact = () => {
                                 <p className="text-[#ff0044] text-sm font-bold uppercase tracking-wider mb-2">
                                     INFO@FERRETTECHNOLOGIES.COM
                                 </p>
-                                <a
+                                {/* <a
                                     href="mailto:info@ferrettechnologies.com"
                                     className="text-white text-2xl md:text-3xl font-bold hover:text-[#ff0044] transition-colors"
                                 >
                                     +12147443666
-                                </a>
+                                </a> */}
                             </div>
                         </div>
                     </motion.div>

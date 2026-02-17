@@ -51,6 +51,23 @@ interface ServiceBubble {
     mobileHeight?: number;
 }
 
+const AndroidIcon = ({ size = 24, className = "" }: { size?: number; className?: string }) => (
+    <svg
+        aria-hidden="true"
+        width={size}
+        height={size}
+        viewBox="0 0 24 24"
+        fill="none"
+        className={className}
+    >
+        <path d="M7 10.25C7 7.9 9.02 6 11.5 6h1C14.98 6 17 7.9 17 10.25V16c0 1.1-.9 2-2 2H9c-1.1 0-2-.9-2-2v-5.75Z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+        <path d="M9.1 6.7 7.9 5M14.9 6.7 16.1 5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+        <circle cx="10.25" cy="11.7" r="0.85" fill="currentColor" />
+        <circle cx="13.75" cy="11.7" r="0.85" fill="currentColor" />
+        <path d="M9.5 20v1.4M14.5 20v1.4M6.4 11.5v4.9M17.6 11.5v4.9" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+    </svg>
+);
+
 const serviceBubbles: ServiceBubble[] = [
     { id: "mobile", label: "Mobile Development", slug: "mobile-development", color: "#3b62f6", type: "center", x: 0, y: 16, width: 404, height: 404, contentPlace: "center", illustration: "phone", labelSize: "center", shape: "46% 54% 49% 51% / 56% 50% 50% 44%", hoverShape: "50% 50% 46% 54% / 53% 47% 53% 47%", gradient: "linear-gradient(165deg,#6b82ff 0%,#4d67f8 48%,#3758df 100%)", titleFirst: true, mobileX: 176, mobileY: 108, mobileWidth: 392, mobileHeight: 392 },
     { id: "cutting-edge", label: "Cutting Edge", slug: "cutting-edge", color: "#4ade80", type: "corner", x: -214, y: -140, width: 374, height: 374, contentPlace: "top-left", illustration: "watch", labelSize: "corner", shape: "56% 44% 51% 49% / 48% 57% 43% 52%", hoverShape: "52% 48% 55% 45% / 51% 53% 47% 49%", gradient: "linear-gradient(165deg,#9be95f 0%,#62d663 56%,#47c35d 100%)", titleFirst: true, mobileX: -150, mobileY: -176, mobileWidth: 362, mobileHeight: 362 },
@@ -617,11 +634,11 @@ const techItems = [
         detail: "We develop wearable apps that maximize hardware potential, from custom watch face design to sophisticated biometric data analysis."
     },
     {
-        id: "appletv",
-        label: "Apple TV",
-        icon: Apple,
+        id: "androidtv",
+        label: "Android TV",
+        icon: AndroidIcon,
         color: "bg-[#f43f5e]",
-        detail: "Our connected TV apps employ sophisticated video and audio algorithms to ensure optimal playback quality and superior user experiences."
+        detail: "Our Android TV apps employ sophisticated video and audio algorithms to ensure optimal playback quality and superior user experiences."
     },
 ];
 
@@ -631,7 +648,7 @@ const mobileTechPanelBackgroundById: Record<string, string> = {
     sdk: "linear-gradient(152deg,#ffd178 0%,#f4a642 52%,#ea8d2d 100%)",
     "smart-tv": "linear-gradient(152deg,#a67bff 0%,#875eff 52%,#6c40f0 100%)",
     wearables: "linear-gradient(152deg,#3bd4e8 0%,#1db6dd 52%,#0f97c8 100%)",
-    appletv: "linear-gradient(152deg,#ff6f89 0%,#f44a66 52%,#de3553 100%)",
+    androidtv: "linear-gradient(152deg,#ff6f89 0%,#f44a66 52%,#de3553 100%)",
 };
 
 const WhatWeDo = () => {
@@ -802,7 +819,7 @@ const WhatWeDo = () => {
                             {techItems.map((item, idx) => {
                                 const Icon = item.icon;
                                 // Custom sizing for specific grid placements to match reference
-                                const isLarge = item.id === 'ibeacon' || item.id === 'appletv';
+                                const isLarge = item.id === "ibeacon" || item.id === "androidtv";
                                 return (
                                     <div
                                         key={item.id}

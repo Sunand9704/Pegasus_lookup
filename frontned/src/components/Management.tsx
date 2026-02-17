@@ -9,7 +9,7 @@ const founders = [
     },
     {
         name: "Surya Yadala",
-        role: "Director & Cofounder",
+        role: "Director & Co-founder",
         image: "/assets/photos/surya yadala/1st person.png",
     },
 ];

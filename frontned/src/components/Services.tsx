@@ -325,7 +325,7 @@ const InquiryContactPanel = () => {
       animate={panelInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.55, ease: "easeOut" }}
       className="relative mx-auto mt-20 w-[min(94vw,1540px)] overflow-hidden border border-white/10 bg-[linear-gradient(90deg,#121723_0%,#141A27_50%,#121723_100%)] rounded-2xl md:rounded-none"
-      style={{ fontFamily: '"TT Hoves Pro", Arial, "Helvetica Neue", Helvetica, sans-serif' }}
+      style={{ fontFamily: '"Amasis MT Md", "Amasis MT", "Times New Roman", serif' }}
     >
       <div className="relative z-[1] grid grid-cols-1 md:grid-cols-[0.4fr_0.6fr]">
         <div className="border-b border-white/10 px-8 py-11 md:border-b-0 md:border-r md:px-[68px] md:py-[68px]">

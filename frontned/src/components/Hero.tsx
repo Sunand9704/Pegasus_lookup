@@ -9,8 +9,8 @@ const awards = [
   },
   {
     icon: "/assets/achivements/2.png",
-    title: "Software development technologies",
-    // subtitle: "Maintenance",
+    title: "Software development",
+    subtitle: "technologies",
   },
   {
     icon: "/assets/achivements/3.png",
@@ -32,7 +32,7 @@ const Hero = () => {
       <div className="hero__content">
         <div className="hero__intro">
           <h1 className="hero__title">
-            <span className="whitespace-nowrap">ADVANCING NEXT GENERALLY</span>
+            <span className="md:whitespace-nowrap">ADVANCING NEXT GENERATION</span>
             <span className="hero__title-accent">GLOBALLY.</span>
           </h1>
 
