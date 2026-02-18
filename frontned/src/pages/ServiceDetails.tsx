@@ -200,7 +200,7 @@ const ServiceDetails = () => {
 
     const handleBack = () => {
         if (backTarget === "/") {
-            navigate("/", { state: { skipLoader: true } });
+            navigate({ pathname: "/", hash: "#services" }, { state: { skipLoader: true } });
             return;
         }
 
@@ -219,6 +219,10 @@ const ServiceDetails = () => {
     }
 
     const Icon = service.icon;
+    const hasLongTitleWord = service.title
+        .split(/\s+/)
+        .some((word) => word.replace(/[^A-Za-z0-9]/g, "").length >= 12);
+    const titleSizeClass = hasLongTitleWord ? "md:text-5xl lg:text-6xl" : "md:text-7xl";
 
     return (
         <div className="min-h-screen overflow-x-hidden bg-[#0c0d16] text-white">
@@ -247,7 +251,7 @@ const ServiceDetails = () => {
                             <Icon size={40} className="text-white" />
                         </div>
 
-                        <h1 className="mb-8 break-words text-4xl font-display font-black uppercase leading-[0.95] sm:text-5xl md:text-7xl">
+                        <h1 className={`mb-8 break-normal hyphens-none text-4xl font-display font-black uppercase leading-[0.95] sm:text-5xl ${titleSizeClass}`}>
                             {service.title}
                         </h1>
 
