@@ -406,11 +406,6 @@ const BubbleCluster = () => {
                                     }}
                                     whileTap={{ scale: 0.99 }}
                                     onClick={() => {
-                                        if (isMobileScreen && bubble.id === "cutting-edge") {
-                                            navigate("/what-we-do/cutting-edge-details", { state: { from: location.pathname } });
-                                            return;
-                                        }
-
                                         navigate(`/services/${bubble.slug}`, { state: { from: location.pathname } });
                                     }}
                                     className="group relative flex cursor-pointer overflow-hidden rounded-[50%] will-change-transform"

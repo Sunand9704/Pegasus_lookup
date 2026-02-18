@@ -67,7 +67,7 @@ const technologySlides: TechnologySlide[] = [
     title: "Artificial Intelligence & Data Technologies",
     description:
       "We build AI-powered products with data pipelines, model operations, and analytics workflows that turn raw information into practical business decisions.",
-    image: techHighlightImage("ai-data-technologies.png"),
+    image: techHighlightImage("ai-data-technologies.jpeg"),
     panelGradient: "linear-gradient(125deg, #7BE3E0 0%, #45C0CC 100%)",
   },
   {
@@ -75,7 +75,7 @@ const technologySlides: TechnologySlide[] = [
     title: "Cloud & Infrastructure Technologies",
     description:
       "We design scalable cloud architecture, deployment automation, and resilient infrastructure that keeps services fast, secure, and reliable under growth.",
-    image: techHighlightImage("cloud-infrastructure-technologies.png"),
+    image: techHighlightImage("cloud-infrastructure-technologies.jpeg"),
     panelGradient: "linear-gradient(125deg, #8691FF 0%, #4F63E6 100%)",
   },
   {
@@ -83,7 +83,7 @@ const technologySlides: TechnologySlide[] = [
     title: "Security Technologies",
     description:
       "We implement secure-by-design systems with modern authentication, access control, encryption, and threat monitoring to protect products and customer data.",
-    image: techHighlightImage("security-technologies.png"),
+    image: techHighlightImage("security-technologies.jpeg"),
     panelGradient: "linear-gradient(125deg, #B054FF 0%, #733CDB 100%)",
   },
   {
@@ -91,7 +91,7 @@ const technologySlides: TechnologySlide[] = [
     title: "Software Technologies Development",
     description:
       "We deliver end-to-end software development across planning, architecture, implementation, QA, and release cycles to ship dependable digital products.",
-    image: techHighlightImage("software-technologies-development.png"),
+    image: techHighlightImage("software-technologies-development.jpeg"),
     panelGradient: "linear-gradient(125deg, #4ADACA 0%, #24B4A7 100%)",
   },
   {
@@ -99,7 +99,7 @@ const technologySlides: TechnologySlide[] = [
     title: "Web Technologies",
     description:
       "We craft responsive, high-performance web platforms using modern frontend and backend stacks, with focus on UX, scalability, and maintainability.",
-    image: techHighlightImage("web-technologies.png"),
+    image: techHighlightImage("web-technologies.jpeg"),
     panelGradient: "linear-gradient(125deg, #8DDD53 0%, #4DB846 100%)",
   },
 ];
