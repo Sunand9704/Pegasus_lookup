@@ -13,6 +13,7 @@ import ContactPage from "./pages/ContactPage";
 import CareersPage from "./pages/CareersPage";
 import ServiceDetails from "./pages/ServiceDetails";
 import WhatWeDo from "./pages/WhatWeDo";
+import CuttingEdgeDetailsMobile from "./pages/CuttingEdgeDetailsMobile";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -33,6 +34,7 @@ const App = () => (
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/careers" element={<CareersPage />} />
           <Route path="/what-we-do" element={<WhatWeDo />} />
+          <Route path="/what-we-do/cutting-edge-details" element={<CuttingEdgeDetailsMobile />} />
           <Route path="/services/:id" element={<ServiceDetails />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

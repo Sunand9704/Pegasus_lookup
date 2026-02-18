@@ -83,17 +83,22 @@ const LoadingAnimation = ({ onComplete }: { onComplete: () => void }) => {
     );
 };
 
-export const PageLoader = ({ children }: { children: React.ReactNode }) => {
-    const [isLoading, setIsLoading] = useState(true);
+export const PageLoader = ({ children, skip = false }: { children: React.ReactNode; skip?: boolean }) => {
+    const [isLoading, setIsLoading] = useState(!skip);
 
     useEffect(() => {
+        if (skip) {
+            setIsLoading(false);
+            return;
+        }
+
         // Set loading to false after 2 seconds
         const timer = setTimeout(() => {
             setIsLoading(false);
         }, 2000);
 
         return () => clearTimeout(timer);
-    }, []);
+    }, [skip]);
 
     return (
         <>

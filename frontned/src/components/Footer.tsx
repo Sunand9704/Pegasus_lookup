@@ -30,7 +30,7 @@ const Footer = () => {
             <Link to="/" className="inline-flex items-center">
               <img src="/assets/brand/ferret-logo-light.svg" alt="Ferret Technologies" className="h-[60px] w-auto" />
             </Link>
-            <p className="mt-6 text-[13px] font-bold uppercase tracking-[1px] opacity-80">(c) 2025-{year} Ferret private limited</p>
+            <p className="mt-6 text-[13px] font-bold uppercase tracking-[1px] opacity-80">(c) 2025 Ferret private limited</p>
             <a
               href="mailto:info@ferrettechnologies.com"
               className="mt-3 inline-block text-[14px] font-medium text-white/90 transition-colors hover:text-[#ff0044]"
