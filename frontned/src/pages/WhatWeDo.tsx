@@ -1,6 +1,6 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import useEmblaCarousel from "embla-carousel-react";
 import {
     Smartphone,
@@ -137,9 +137,16 @@ const labelSizeClass: Record<NonNullable<ServiceBubble["labelSize"]>, string> = 
 
 const BubbleCluster = () => {
     const navigate = useNavigate();
+    const location = useLocation();
     const [isMobileScreen, setIsMobileScreen] = React.useState(false);
     React.useEffect(() => {
-        setIsMobileScreen(window.innerWidth < 768);
+        const mediaQuery = window.matchMedia("(max-width: 767px)");
+        const onViewportChange = (event: MediaQueryListEvent) => setIsMobileScreen(event.matches);
+
+        setIsMobileScreen(mediaQuery.matches);
+        mediaQuery.addEventListener("change", onViewportChange);
+
+        return () => mediaQuery.removeEventListener("change", onViewportChange);
     }, []);
 
     const sorted = [...serviceBubbles].sort((a, b) => zIndexByType[a.type] - zIndexByType[b.type]);
@@ -398,7 +405,14 @@ const BubbleCluster = () => {
                                         borderRadius: { duration: 0.45, ease: "easeOut" },
                                     }}
                                     whileTap={{ scale: 0.99 }}
-                                    onClick={() => navigate(`/services/${bubble.slug}`)}
+                                    onClick={() => {
+                                        if (isMobileScreen && bubble.id === "cutting-edge") {
+                                            navigate("/what-we-do/cutting-edge-details", { state: { from: location.pathname } });
+                                            return;
+                                        }
+
+                                        navigate(`/services/${bubble.slug}`, { state: { from: location.pathname } });
+                                    }}
                                     className="group relative flex cursor-pointer overflow-hidden rounded-[50%] will-change-transform"
                                     style={{
                                         width: (isMobileScreen ? (bubble.mobileWidth ?? bubble.width) : bubble.width) * clusterScale * clusterWidthScale,
@@ -652,9 +666,16 @@ const mobileTechPanelBackgroundById: Record<string, string> = {
 };
 
 const WhatWeDo = () => {
+    const navigate = useNavigate();
     const [isMobileScreen, setIsMobileScreen] = React.useState(false);
     React.useEffect(() => {
-        setIsMobileScreen(window.innerWidth < 768);
+        const mediaQuery = window.matchMedia("(max-width: 767px)");
+        const onViewportChange = (event: MediaQueryListEvent) => setIsMobileScreen(event.matches);
+
+        setIsMobileScreen(mediaQuery.matches);
+        mediaQuery.addEventListener("change", onViewportChange);
+
+        return () => mediaQuery.removeEventListener("change", onViewportChange);
     }, []);
 
     const [emblaRefVerticals] = useEmblaCarousel({ loop: true, align: "center", skipSnaps: false });
@@ -799,9 +820,11 @@ const WhatWeDo = () => {
                             {techItems.map((item) => {
                                 const Icon = item.icon;
                                 return (
-                                    <div
+                                    <button
                                         key={item.id}
-                                        className="relative flex h-[340px] w-full items-center justify-center border-b border-black/20 px-6 text-white"
+                                        type="button"
+                                        onClick={() => navigate("/what-we-do/cutting-edge-details", { state: { from: "/what-we-do" } })}
+                                        className="relative flex h-[340px] w-full items-center justify-center border-b border-black/20 px-6 text-white cursor-pointer text-center"
                                         style={{ background: mobileTechPanelBackgroundById[item.id] }}
                                     >
                                         <div className="flex flex-col items-center text-center">
@@ -810,7 +833,7 @@ const WhatWeDo = () => {
                                                 {item.label}
                                             </h3>
                                         </div>
-                                    </div>
+                                    </button>
                                 );
                             })}
                         </div>

@@ -25,6 +25,7 @@ const MailIcon = () => (
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [isMobileViewport, setIsMobileViewport] = useState(() => window.innerWidth <= 1024);
   const location = useLocation();
   const isTransparentRoute = ["/", "/what-we-do"].includes(location.pathname);
 
@@ -35,11 +36,21 @@ const Navbar = () => {
   }, []);
 
   useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 1024px)");
+    const onViewportChange = (event: MediaQueryListEvent) => setIsMobileViewport(event.matches);
+
+    setIsMobileViewport(mediaQuery.matches);
+    mediaQuery.addEventListener("change", onViewportChange);
+
+    return () => mediaQuery.removeEventListener("change", onViewportChange);
+  }, []);
+
+  useEffect(() => {
     setMobileOpen(false);
   }, [location.pathname]);
 
   const showSolidBackground = scrolled || !isTransparentRoute;
-  const isLightNavbar = scrolled;
+  const isLightNavbar = scrolled || isMobileViewport;
 
   return (
     <motion.nav
@@ -47,7 +58,7 @@ const Navbar = () => {
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
       className={`header ${showSolidBackground ? "header--solid" : "header--transparent"} ${isLightNavbar ? "header--light" : ""
-        } ${mobileOpen ? "header--mobile-open" : ""}`}
+        } ${mobileOpen ? "header--mobile-open" : ""} ${isMobileViewport && scrolled && !mobileOpen ? "header--mobile-menu-only" : ""}`}
     >
       <div className="header__inner">
         <Link to="/" className="logo" aria-label="Ferret Technologies">
@@ -114,7 +125,7 @@ const Navbar = () => {
             initial={{ opacity: 0, y: -20, height: 0 }}
             animate={{ opacity: 1, y: 0, height: "auto" }}
             exit={{ opacity: 0, y: -20, height: 0 }}
-            className="mobile-menu border-b border-white/10 bg-[#0c0d20]/95 backdrop-blur-xl"
+            className="mobile-menu"
           >
             <div className="mobile-menu__inner">
               {navLinks.map((link) => (

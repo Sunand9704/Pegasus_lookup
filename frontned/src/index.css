@@ -649,40 +649,30 @@ body,
 
 @media only screen and (max-width: 1024px) {
   .header {
-    background: rgba(12, 13, 32, 0.92);
-    box-shadow: none;
+    background: rgba(249, 249, 249, 0.95);
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
     backdrop-filter: saturate(180%) blur(16px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
   }
 
   .header--light {
-    background: transparent;
-    box-shadow: none;
-    backdrop-filter: none;
-    border-bottom: 0;
+    background: rgba(249, 249, 249, 0.95);
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    backdrop-filter: saturate(180%) blur(16px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
   }
 
   .header__inner {
     height: 58px;
     width: min(calc(100% - 12px), 980px);
     align-items: center;
-  }
-
-  .header--light .header__inner {
-    justify-content: flex-end;
-  }
-
-  .header--light .logo {
-    display: none;
-  }
-
-  .header--light.header--mobile-open {
-    background: rgba(12, 13, 32, 0.92);
-    backdrop-filter: saturate(180%) blur(16px);
+    transition: height 0.22s ease, opacity 0.22s ease;
   }
 
   .logo {
     left: 0;
     gap: 2px;
+    transition: opacity 0.22s ease, visibility 0.22s ease;
   }
 
   .logo__img {
@@ -734,13 +724,35 @@ body,
     border-radius: 50%;
     background: var(--red);
     box-shadow: 0 4px 12px rgba(255, 0, 68, 0.3);
+    transition: box-shadow 0.22s ease;
+  }
+
+  .header--mobile-menu-only {
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+    border-bottom: 0;
+  }
+
+  .header--mobile-menu-only .header__inner {
+    width: 100%;
+    justify-content: flex-end;
+    padding-right: 12px;
+    height: 52px;
+  }
+
+  .header--mobile-menu-only .logo {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
   }
 
   .mobile-menu {
     display: block;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-    background: rgba(10, 10, 20, 0.98);
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: saturate(180%) blur(16px);
     overflow: hidden;
   }
 
@@ -753,7 +765,7 @@ body,
 
   .mobile-menu__link {
     text-decoration: none;
-    color: rgba(255, 255, 255, 0.85);
+    color: rgba(29, 31, 38, 0.9);
     font-size: 13px;
     font-weight: 700;
     letter-spacing: 0.84px;
@@ -892,7 +904,7 @@ body,
   }
 
   .hero__title {
-    font-size: 32px;
+    font-size: 30px;
     line-height: 1.2;
     margin-bottom: 24px;
     text-align: center;

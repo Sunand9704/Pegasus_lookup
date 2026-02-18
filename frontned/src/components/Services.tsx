@@ -1,6 +1,6 @@
 import { AnimatePresence, motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import type { LucideIcon } from "lucide-react";
 import { ArrowRight, Brain, ChevronLeft, ChevronRight, Cpu, Globe, Loader2, Monitor, Smartphone, UsersRound } from "lucide-react";
 import { sendEmail } from "@/services/emailService";
@@ -107,6 +107,7 @@ const technologySlides: TechnologySlide[] = [
 const ServiceCircle = ({ service, index }: { service: ServiceItem; index: number }) => {
   const ref = useRef(null);
   const navigate = useNavigate();
+  const location = useLocation();
   const inView = useInView(ref, { once: true, margin: "-30px" });
   const Icon = service.icon;
 
@@ -117,7 +118,7 @@ const ServiceCircle = ({ service, index }: { service: ServiceItem; index: number
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay: index * 0.08 }}
       className="flex w-full items-center gap-6 px-4 group cursor-pointer md:flex-col md:text-center md:px-0"
-      onClick={() => navigate(`/services/${service.slug}`)}
+      onClick={() => navigate(`/services/${service.slug}`, { state: { from: location.pathname } })}
     >
       <div className="relative">
         {/* Deep Grounding Shadow */}

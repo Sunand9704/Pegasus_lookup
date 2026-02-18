@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useLocation, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Smartphone, Globe, Monitor, UsersRound, Cpu, ArrowLeft, Watch, Palette, Zap, Search, ShieldCheck, Accessibility, Terminal, Brain } from "lucide-react";
 import Navbar from "@/components/Navbar";
@@ -190,7 +190,22 @@ const serviceData = {
 
 const ServiceDetails = () => {
     const { id } = useParams<{ id: string }>();
+    const location = useLocation();
+    const navigate = useNavigate();
     const service = serviceData[id as keyof typeof serviceData];
+    const sourcePath = (location.state as { from?: string } | null)?.from;
+    const backTarget = sourcePath === "/" || sourcePath === "/what-we-do" || sourcePath === "/services"
+        ? sourcePath
+        : "/what-we-do";
+
+    const handleBack = () => {
+        if (backTarget === "/") {
+            navigate("/", { state: { skipLoader: true } });
+            return;
+        }
+
+        navigate(backTarget);
+    };
 
     if (!service) {
         return (
@@ -210,10 +225,14 @@ const ServiceDetails = () => {
             <Navbar />
 
             <main className="pt-32 pb-20 px-4 md:px-8 max-w-7xl mx-auto">
-                <Link to="/what-we-do" className="inline-flex items-center gap-2 text-white/60 hover:text-[#ff0044] transition-colors mb-12">
+                <button
+                    type="button"
+                    onClick={handleBack}
+                    className="inline-flex items-center gap-2 bg-transparent border-0 p-0 text-white/60 hover:text-[#ff0044] transition-colors mb-12"
+                >
                     <ArrowLeft size={20} />
                     <span>Back</span>
-                </Link>
+                </button>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
                     <motion.div
